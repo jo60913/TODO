@@ -7,6 +7,8 @@ class OverViewPage extends StatelessWidget {
       icon: Icons.work_history_rounded, name: 'overview', child: OverViewPage());
   @override
   Widget build(BuildContext context) {
-    return const Placeholder();
+    return Container(
+      color: Colors.tealAccent,
+    );
   }
 }
