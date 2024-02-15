@@ -1,13 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_adaptive_scaffold/flutter_adaptive_scaffold.dart';
 import 'package:go_router/go_router.dart';
+import 'package:todo/application/page/setting/setting_page.dart';
+import '../../core/page_config.dart';
 import '../dashboard/dashboard.dart';
 import '../overview/overview_page.dart';
 
 class HomePage extends StatefulWidget {
-  HomePage({super.key , required String tab}) : index = tabs.indexWhere((element) => element.name == tab);
+  HomePage({super.key, required String tab})
+      : index = tabs.indexWhere((element) => element.name == tab);
 
   final int index;
+
+  static const PageConfig pageConfig = PageConfig(
+    icon: Icons.home_rounded,
+    name: 'home',
+  );
 
   static const tabs = [DashBoardPage.pageConfig, OverViewPage.pageConfig];
 
@@ -33,6 +41,7 @@ class _HomePageState extends State<HomePage> {
               Breakpoints.mediumAndUp: SlotLayout.from(
                   key: const Key('primary-navigation-medium'),
                   builder: (context) => AdaptiveScaffold.standardNavigationRail(
+                    trailing: IconButton(onPressed: ()=>context.pushNamed(SettingPage.pageConfig.name), icon: Icon(SettingPage.pageConfig.icon)),
                       selectedLabelTextStyle:
                           TextStyle(color: theme.colorScheme.onBackground),
                       selectedIconTheme:
@@ -40,7 +49,8 @@ class _HomePageState extends State<HomePage> {
                       unselectedIconTheme: IconThemeData(
                           color:
                               theme.colorScheme.onBackground.withOpacity(0.5)),
-                      onDestinationSelected:(index)=> _tapOnNavigationDestination(context,index),
+                      onDestinationSelected: (index) =>
+                          _tapOnNavigationDestination(context, index),
                       selectedIndex: widget.index,
                       destinations: destination
                           .map((_) => AdaptiveScaffold.toRailDestination(_))
@@ -53,9 +63,9 @@ class _HomePageState extends State<HomePage> {
                   key: const Key('bottom-navigation-smell'),
                   builder: (_) => AdaptiveScaffold.standardBottomNavigationBar(
                       destinations: destination,
-                      onDestinationSelected:(index)=> _tapOnNavigationDestination(context,index),
-                    currentIndex: widget.index
-                  ))
+                      onDestinationSelected: (index) =>
+                          _tapOnNavigationDestination(context, index),
+                      currentIndex: widget.index))
             },
           ),
           body: SlotLayout(
@@ -66,9 +76,10 @@ class _HomePageState extends State<HomePage> {
             },
           ),
           secondaryBody: SlotLayout(
-            config: <Breakpoint,SlotLayoutConfig>{
-              Breakpoints.mediumAndUp:SlotLayout.from(key: const Key('secondary-body-medium'),
-              builder: AdaptiveScaffold.emptyBuilder)
+            config: <Breakpoint, SlotLayoutConfig>{
+              Breakpoints.mediumAndUp: SlotLayout.from(
+                  key: const Key('secondary-body-medium'),
+                  builder: AdaptiveScaffold.emptyBuilder)
             },
           ),
         ),
@@ -76,5 +87,8 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  void _tapOnNavigationDestination(BuildContext context,int index) => context.go('/home/${HomePage.tabs[index].name}');
+  void _tapOnNavigationDestination(BuildContext context, int index) =>
+      context.goNamed(HomePage.pageConfig.name, params: {
+        'tab': HomePage.tabs[index].name,
+      });
 }
