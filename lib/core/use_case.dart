@@ -1,5 +1,6 @@
 import 'package:either_dart/either.dart';
 import 'package:equatable/equatable.dart';
+import 'package:todo/domain/entity/unique_id.dart';
 
 import '../domain/failure/failures.dart';
 
@@ -12,4 +13,24 @@ abstract class Params extends Equatable {}
 class NoParams extends Params {
   @override
   List<Object?> get props => [];
+}
+
+class ToDoEntryIdsParam extends Params {
+  ToDoEntryIdsParam({required this.collectionId, required this.entryId})
+      : super();
+  final EntryId entryId;
+  final CollectionId collectionId;
+
+  @override
+  List<Object?> get props => [collectionId, entryId];
+}
+
+class CollectionIdsParam extends Params {
+  CollectionIdsParam({required this.collectionId})
+      : super();
+
+  final CollectionId collectionId;
+
+  @override
+  List<Object?> get props => [collectionId];
 }
