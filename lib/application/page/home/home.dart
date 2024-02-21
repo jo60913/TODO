@@ -54,7 +54,7 @@ class _HomePageState extends State<HomePage> {
                       selectedIndex: widget.index,
                       destinations: destination
                           .map((_) => AdaptiveScaffold.toRailDestination(_))
-                          .toList()))
+                          .toList())),
             },
           ),
           bottomNavigation: SlotLayout(
@@ -72,7 +72,7 @@ class _HomePageState extends State<HomePage> {
             config: <Breakpoint, SlotLayoutConfig>{
               Breakpoints.smallAndUp: SlotLayout.from(
                   key: const Key('primary-body-small'),
-                  builder: (_) => HomePage.tabs[widget.index].child)
+                  builder: (_) => HomePage.tabs[widget.index].child),
             },
           ),
           secondaryBody: SlotLayout(

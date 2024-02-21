@@ -42,7 +42,8 @@ class OverviewPageProvider extends StatelessWidget {
     return BlocProvider(
       create: (context) => ToDoOverviewCubit(
           loadToDoCollections: LoadToDoCollections(
-              toDoRepository: RepositoryProvider.of(context)))..readToDoCollections(),
+              toDoRepository: RepositoryProvider.of(context)),)
+        ..readToDoCollections(),
       child: const OverViewPage(),
     );
   }

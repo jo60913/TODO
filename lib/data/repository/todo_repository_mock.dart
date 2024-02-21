@@ -55,17 +55,16 @@ class ToDoRepositoryMock implements ToDoRepository {
   }
 
   @override
-  Future<Either<Failure, List<EntryId>>> readToDoEntryIds(
-      CollectionId collectionId) {
+  Future<Either<Failure, List<EntryId>>> readToDoEntryIds(CollectionId collectionId) {
     try {
       final startIndex = int.parse(collectionId.value) * 10;
-      final endIndex = startIndex * 10;
-      final entryIds = todoEntries
-          .sublist(startIndex, endIndex)
-          .map((entry) => entry.id)
-          .toList();
+      final endIndex = startIndex + 10;
+      final entryIds = todoEntries.sublist(startIndex, endIndex).map((entry) => entry.id).toList();
+
       return Future.delayed(
-          const Duration(microseconds: 300), () => Right(entryIds));
+        const Duration(milliseconds: 300),
+            () => Right(entryIds),
+      );
     } on Exception catch (e) {
       return Future.value(Left(ServerFailure(stackTrace: e.toString())));
     }
