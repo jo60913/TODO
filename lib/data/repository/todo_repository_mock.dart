@@ -13,7 +13,7 @@ class ToDoRepositoryMock implements ToDoRepository {
       (index) => ToDoEntry(
           description: 'description $index',
           id: EntryId.fromUniqueString(index.toString()),
-          isDown: false));
+          isDone: false));
 
   final toDoCollection = List<ToDoCollection>.generate(
     10,
@@ -68,5 +68,15 @@ class ToDoRepositoryMock implements ToDoRepository {
     } on Exception catch (e) {
       return Future.value(Left(ServerFailure(stackTrace: e.toString())));
     }
+  }
+
+  @override
+  Future<Either<Failure, ToDoEntry>> updateToDoEntry({required CollectionId collectionId, required EntryId  entryId}) {
+    final index = todoEntries.indexWhere((element) => element.id == entryId);
+    final entryToUpdate = todoEntries[index];
+    final updateEntry = todoEntries[index].copyWith(isDone: !entryToUpdate.isDone);
+    todoEntries[index] = updateEntry;
+
+    return Future.delayed(const Duration(milliseconds: 100),() => Right(updateEntry));
   }
 }
