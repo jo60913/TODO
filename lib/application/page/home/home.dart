@@ -1,7 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_adaptive_scaffold/flutter_adaptive_scaffold.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:todo/application/page/detail/todo_detail.dart';
+import 'package:todo/application/page/home/bloc/navigation_todo_cubit.dart';
 import 'package:todo/application/page/setting/setting_page.dart';
+import 'package:todo/domain/entity/unique_id.dart';
+import '../../core/constants.dart';
 import '../../core/page_config.dart';
 import '../dashboard/dashboard.dart';
 import '../overview/overview_page.dart';
@@ -41,14 +46,17 @@ class _HomePageState extends State<HomePage> {
               Breakpoints.mediumAndUp: SlotLayout.from(
                   key: const Key('primary-navigation-medium'),
                   builder: (context) => AdaptiveScaffold.standardNavigationRail(
-                    trailing: IconButton(onPressed: ()=>context.pushNamed(SettingPage.pageConfig.name), icon: Icon(SettingPage.pageConfig.icon)),
+                      trailing: IconButton(
+                          onPressed: () => context
+                              .pushNamed(SettingPage.pageConfig.name),
+                          icon: Icon(SettingPage.pageConfig.icon)),
                       selectedLabelTextStyle:
                           TextStyle(color: theme.colorScheme.onBackground),
-                      selectedIconTheme:
-                          IconThemeData(color: theme.colorScheme.onBackground),
+                      selectedIconTheme: IconThemeData(
+                          color: theme.colorScheme.onBackground),
                       unselectedIconTheme: IconThemeData(
-                          color:
-                              theme.colorScheme.onBackground.withOpacity(0.5)),
+                          color: theme.colorScheme.onBackground
+                              .withOpacity(0.5)),
                       onDestinationSelected: (index) =>
                           _tapOnNavigationDestination(context, index),
                       selectedIndex: widget.index,
@@ -61,11 +69,12 @@ class _HomePageState extends State<HomePage> {
             config: <Breakpoint, SlotLayoutConfig>{
               Breakpoints.small: SlotLayout.from(
                   key: const Key('bottom-navigation-smell'),
-                  builder: (_) => AdaptiveScaffold.standardBottomNavigationBar(
-                      destinations: destination,
-                      onDestinationSelected: (index) =>
-                          _tapOnNavigationDestination(context, index),
-                      currentIndex: widget.index))
+                  builder: (_) =>
+                      AdaptiveScaffold.standardBottomNavigationBar(
+                          destinations: destination,
+                          onDestinationSelected: (index) =>
+                              _tapOnNavigationDestination(context, index),
+                          currentIndex: widget.index))
             },
           ),
           body: SlotLayout(
@@ -79,7 +88,31 @@ class _HomePageState extends State<HomePage> {
             config: <Breakpoint, SlotLayoutConfig>{
               Breakpoints.mediumAndUp: SlotLayout.from(
                   key: const Key('secondary-body-medium'),
-                  builder: AdaptiveScaffold.emptyBuilder)
+                  builder: widget.index != PageIndex.overViewPageIndex
+                      ? null
+                      : (_) => BlocBuilder<NavigationTodoCubit,
+                              NavigationTodoCubitState>(
+                            builder: (context, state) {
+                              final selectId = state.selectedCollectionId;
+                              final isSecondBodyDisplay =
+                                  Breakpoints.mediumAndUp.isActive(context);
+
+                              context
+                                  .read<NavigationTodoCubit>()
+                                  .secondBodyHasChange(
+                                      isSecondBodyDisplay:
+                                          isSecondBodyDisplay);
+
+                              if (selectId == null) {
+                                return const Placeholder();
+                              } else {
+                                return ToDoDetailPageProvider(
+                                    key: Key(selectId.value),
+                                    //當key不壹樣的時候flutter就會刷新
+                                    collectionId: selectId);
+                              }
+                            },
+                          ))
             },
           ),
         ),
