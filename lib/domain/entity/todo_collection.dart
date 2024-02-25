@@ -1,5 +1,3 @@
-
-
 import 'todo_color.dart';
 import 'unique_id.dart';
 
@@ -13,6 +11,14 @@ class ToDoCollection {
     required this.title,
     required this.color,
   });
+
+  ToDoCollection copyWith({
+    String? title,
+    ToDoColor? color,
+  }) {
+    return ToDoCollection(
+        id: id, title: title ?? this.title, color: color ?? this.color);
+  }
 
   factory ToDoCollection.empty() {
     return ToDoCollection(
