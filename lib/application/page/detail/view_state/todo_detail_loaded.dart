@@ -30,6 +30,7 @@ class ToDoDetailLoaded extends StatelessWidget {
                 alignment: Alignment.bottomRight,
                 child: FloatingActionButton(
                   key:const Key('create-todo-entry'),
+                  heroTag: 'create-todo-entry',
                   onPressed: () =>
                       context.pushNamed(CreateToDoEntryPage.pageConfig.name,
                           extra: collectionId),
