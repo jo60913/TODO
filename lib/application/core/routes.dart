@@ -64,7 +64,9 @@ final routes = GoRouter(
       GoRoute(
           name: CreateToDoEntryPage.pageConfig.name,
           path: "$_basePath/overview/${CreateToDoEntryPage.pageConfig.name}",
-          builder: (context, state) => Scaffold(
+          builder: (context, state) {
+            final castedExtra = state.extra as CreateToDoEntryPageExtra;
+            return Scaffold(
             appBar: AppBar(
               title: const Text('新增'),
               leading: BackButton(
@@ -79,9 +81,11 @@ final routes = GoRouter(
               ),
             ),
             body: SafeArea(
-              child: CreateToDoEntryPageProvider(collectionId: state.extra as CollectionId,),
+              child: CreateToDoEntryPageProvider(
+                toDoEntryItemAddedCallback: castedExtra.toDoEntryItemAddedCallback,
+                collectionId: castedExtra.collectionId,),
             ),
-          )),
+          );}),
       GoRoute(
           name: ToDoDetailPage.pageConfig.name,
           path: '$_basePath/overview/:collectionId',

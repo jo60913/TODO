@@ -6,28 +6,44 @@ import 'package:todo/application/page/create_todo_entry/bloc/create_to_do_entry_
 import 'package:todo/domain/entity/unique_id.dart';
 import 'package:todo/domain/repository/todo_repository.dart';
 import 'package:todo/domain/usecase/create_todo_entry.dart';
-
 import '../../core/page_config.dart';
+
+typedef ToDoEntryItemAddedCallback = Function();
+
+class CreateToDoEntryPageExtra {
+  final CollectionId collectionId;
+  final ToDoEntryItemAddedCallback toDoEntryItemAddedCallback;
+
+  CreateToDoEntryPageExtra(
+      {required this.collectionId, required this.toDoEntryItemAddedCallback});
+}
 
 class CreateToDoEntryPageProvider extends StatelessWidget {
   final CollectionId collectionId;
+  final ToDoEntryItemAddedCallback toDoEntryItemAddedCallback;
 
-  const CreateToDoEntryPageProvider({super.key, required this.collectionId});
+  const CreateToDoEntryPageProvider({
+    super.key,
+    required this.collectionId,
+    required this.toDoEntryItemAddedCallback,
+  });
 
   @override
   Widget build(BuildContext context) {
     return BlocProvider<CreateToDoEntryPageCubit>(
-      create: (context) =>
-          CreateToDoEntryPageCubit(
-            collectionId: collectionId,
-            addToDoEntry: CreateToDoEntry(toDoRepository: RepositoryProvider.of<ToDoRepository>(context)),),
-      child: const CreateToDoEntryPage(),
+      create: (context) => CreateToDoEntryPageCubit(
+        collectionId: collectionId,
+        addToDoEntry: CreateToDoEntry(
+            toDoRepository: RepositoryProvider.of<ToDoRepository>(context)),
+      ),
+      child:  CreateToDoEntryPage(toDoEntryItemAddedCallback: toDoEntryItemAddedCallback,),
     );
   }
 }
 
 class CreateToDoEntryPage extends StatefulWidget {
-  const CreateToDoEntryPage({super.key});
+  final ToDoEntryItemAddedCallback toDoEntryItemAddedCallback;
+  const CreateToDoEntryPage({super.key,required this.toDoEntryItemAddedCallback});
 
   static const pageConfig = PageConfig(
       name: 'create_todo_entry',
@@ -46,17 +62,17 @@ class _CreateToDoEntryPageState extends State<CreateToDoEntryPage> {
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Form(
-        key: _formKey,
+          key: _formKey,
           child: Column(
             children: [
               TextFormField(
                 decoration: const InputDecoration(labelText: '描述'),
                 validator: (value) {
                   final currentValidationState = context
-                      .read<CreateToDoEntryPageCubit>()
-                      .state
-                      .description
-                      ?.validationStatus ??
+                          .read<CreateToDoEntryPageCubit>()
+                          .state
+                          .description
+                          ?.validationStatus ??
                       ValidationStatus.pending;
                   switch (currentValidationState) {
                     case ValidationStatus.error:
@@ -71,12 +87,15 @@ class _CreateToDoEntryPageState extends State<CreateToDoEntryPage> {
                       .descriptionChanged(description: value);
                 },
               ),
-              const SizedBox(height: 16,),
+              const SizedBox(
+                height: 16,
+              ),
               ElevatedButton(
                   onPressed: () {
                     final isValid = _formKey.currentState?.validate();
                     if (isValid == true) {
                       context.read<CreateToDoEntryPageCubit>().submit();
+                      widget.toDoEntryItemAddedCallback.call();
                       context.pop();
                     }
                   },
