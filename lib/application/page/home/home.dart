@@ -6,7 +6,6 @@ import 'package:todo/application/page/create_todo_collection_page/create_todo_co
 import 'package:todo/application/page/detail/todo_detail.dart';
 import 'package:todo/application/page/home/bloc/navigation_todo_cubit.dart';
 import 'package:todo/application/page/setting/setting_page.dart';
-import 'package:todo/domain/entity/unique_id.dart';
 import '../../core/constants.dart';
 import '../../core/page_config.dart';
 import '../dashboard/dashboard.dart';
@@ -48,6 +47,7 @@ class _HomePageState extends State<HomePage> {
                   key: const Key('primary-navigation-medium'),
                   builder: (context) => AdaptiveScaffold.standardNavigationRail(
                       leading: IconButton(
+                        key: const Key('create-todo-collection'),
                         onPressed: ()=>context.pushNamed(CreateToDoCollectionPage.pageConfig.name),
                         icon: Icon(CreateToDoCollectionPage.pageConfig.icon),
                         tooltip: "新增",

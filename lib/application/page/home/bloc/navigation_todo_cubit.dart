@@ -12,7 +12,7 @@ class NavigationTodoCubit extends Cubit<NavigationTodoCubitState> {
   }
 
   void secondBodyHasChange({required bool isSecondBodyDisplay}) {
-    if(isSecondBodyDisplay != state.selectedCollectionId) {
+    if(isSecondBodyDisplay != state.isSecondBodyIsDisplayed) {
       emit(NavigationTodoCubitState(
           isSecondBodyIsDisplayed: isSecondBodyDisplay,
           selectedCollectionId: state.selectedCollectionId));
