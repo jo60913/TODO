@@ -35,7 +35,7 @@ class ToDoRepositoryLocal extends ToDoRepository {
       CollectionId collectionId, ToDoEntry toDoEntry) async {
     try {
       final result = await localDataSource.createToDoEntry(
-          collectionId: collectionId, entry: toDoEntryToModel(toDoEntry));
+          collectionId: collectionId.value, entry: toDoEntryToModel(toDoEntry));
       return Right(result);
     } on CacheException catch (e) {
       return Future.value(Left(CacheFailure(stackTrace: e.toString())));
