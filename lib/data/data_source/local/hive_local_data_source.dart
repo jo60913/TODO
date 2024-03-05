@@ -69,7 +69,7 @@ class HiveLocalDataSource implements ToDoLocalDataSourceInterface {
     try {
       final collectionBox = await _openCollectionBox();
       final collection =
-      (await collectionBox.get(collectionId)) as Map<String, dynamic>?;
+      (await collectionBox.get(collectionId))?.cast<String,dynamic>();
       if (collection == null) throw EntryNotFoundException();
 
       return ToDoCollectionModel.fromJson(collection);

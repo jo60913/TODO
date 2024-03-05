@@ -80,7 +80,7 @@ class _CreateToDoCollectionPageState extends State<CreateToDoCollectionPage> {
             ElevatedButton(onPressed: (){
               final isValide = _formKey.currentState?.validate();   //用來辨識所有當中所有欄位的validator是否正確為null代表為true
               if(isValide == true) {
-                context.read<CreateTodoCollectionPageCubit>().submit().then((value) => context.pop(true));
+                context.read<CreateTodoCollectionPageCubit>().submit().then((value) => context.pop(true)).then((value) => context.pop(true),);
               }
             }, child: const Text('儲存'))
           ],

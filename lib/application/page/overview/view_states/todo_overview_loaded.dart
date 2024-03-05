@@ -5,6 +5,7 @@ import 'package:go_router/go_router.dart';
 import 'package:todo/application/page/create_todo_collection_page/create_todo_collection_page.dart';
 import 'package:todo/application/page/detail/todo_detail.dart';
 import 'package:todo/application/page/home/bloc/navigation_todo_cubit.dart';
+import 'package:todo/application/page/overview/bloc/todo_overview_cubit.dart';
 
 import '../../../../domain/entity/todo_collection.dart';
 
@@ -15,7 +16,6 @@ class ToDoOverviewLoaded extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final shouldDisplayAddItemButton = Breakpoints.small.isActive(context);
     return Stack(
       children: [
         ListView.builder(
@@ -48,7 +48,6 @@ class ToDoOverviewLoaded extends StatelessWidget {
                         title: Text(item.title),
                       ));
             }),
-        if(shouldDisplayAddItemButton)
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: Align(
@@ -56,8 +55,13 @@ class ToDoOverviewLoaded extends StatelessWidget {
               child: FloatingActionButton(
                 key: const Key('create-todo-collection'),
                 heroTag: 'create-todo-collection',
-                onPressed: () =>
-                    context.pushNamed(CreateToDoCollectionPage.pageConfig.name),
+                onPressed: () {
+                  context.pushNamed(CreateToDoCollectionPage.pageConfig.name).then((value) {
+                    if(value == true) {
+                      context.read<ToDoOverviewCubit>().readToDoCollections();
+                    }
+                  });
+                },
                 child: Icon(CreateToDoCollectionPage.pageConfig.icon),
               ),
             ),
