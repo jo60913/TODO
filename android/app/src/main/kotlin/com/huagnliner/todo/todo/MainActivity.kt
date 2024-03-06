@@ -1,4 +1,4 @@
-package com.huagnliner.todo.todo
+package com.huangliner.todo
 
 import io.flutter.embedding.android.FlutterActivity
 

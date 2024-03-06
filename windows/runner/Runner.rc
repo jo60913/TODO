@@ -89,11 +89,11 @@ BEGIN
     BEGIN
         BLOCK "040904e4"
         BEGIN
-            VALUE "CompanyName", "com.huagnliner.todo" "\0"
+            VALUE "CompanyName", "com.huangliner.todo" "\0"
             VALUE "FileDescription", "todo" "\0"
             VALUE "FileVersion", VERSION_AS_STRING "\0"
             VALUE "InternalName", "todo" "\0"
-            VALUE "LegalCopyright", "Copyright (C) 2024 com.huagnliner.todo. All rights reserved." "\0"
+            VALUE "LegalCopyright", "Copyright (C) 2024 com.huangliner.todo. All rights reserved." "\0"
             VALUE "OriginalFilename", "todo.exe" "\0"
             VALUE "ProductName", "todo" "\0"
             VALUE "ProductVersion", VERSION_AS_STRING "\0"
