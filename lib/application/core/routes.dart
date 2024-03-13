@@ -29,6 +29,7 @@ final routes = GoRouter(
                 actions: [
                   AuthStateChangeAction<SignedIn>((context, signedIn) {
                     //使用者登入
+                    debugPrint('登入成功');
                     context.pushNamed(
                       HomePage.pageConfig.name,
                       params: {'tab': OverViewPage.pageConfig.name},

@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:todo/application/page/detail/todo_detail.dart';
 import 'package:todo/application/page/home/bloc/navigation_todo_cubit.dart';
+import 'package:todo/application/page/home/component/login_button.dart';
 import 'package:todo/application/page/setting/setting_page.dart';
 import '../../core/constants.dart';
 import '../../core/page_config.dart';
@@ -71,6 +72,7 @@ class _HomePageState extends State<HomePage> {
                                 icon: Icon(SettingPage.pageConfig.icon)),
                             onDestinationSelected: (index) =>
                                 _tapOnNavigationDestination(context, index),
+                            leading: const LoginButton(),
                             selectedIndex: widget.index,
                             destinations:
                                 destination

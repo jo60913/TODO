@@ -39,7 +39,7 @@ class OverviewPageProvider extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
+    return BlocProvider<ToDoOverviewCubit>(
       create: (context) => ToDoOverviewCubit(
           loadToDoCollections: LoadToDoCollections(
               toDoRepository: RepositoryProvider.of(context)),)

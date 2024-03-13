@@ -10,7 +10,8 @@ import 'package:todo/data/repository/todo_repository_local.dart';
 import 'package:todo/domain/repository/todo_repository.dart';
 import 'package:todo/firebase_options.dart';
 
-void main() async {
+Future<void> main() async {
+
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
@@ -22,6 +23,7 @@ void main() async {
   dataSource.init();
   final authCubit = AuthCubit();
   FirebaseAuth.instance.authStateChanges().listen((event) { //一但使用者登入或登出時就會觸發
+    debugPrint("user是否為空${event == null}");
     authCubit.authStateChange(user: event);
   });
 
