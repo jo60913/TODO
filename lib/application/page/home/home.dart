@@ -53,9 +53,11 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       body: SafeArea(
         child: BlocListener<NavigationTodoCubit, NavigationTodoCubitState>(
-          listenWhen: (previous,current) => previous.isSecondBodyIsDisplayed != current.isSecondBodyIsDisplayed,
+          listenWhen: (previous, current) =>
+              previous.isSecondBodyIsDisplayed !=
+              current.isSecondBodyIsDisplayed,
           listener: (context, state) {
-            if(context.canPop() && (state.isSecondBodyIsDisplayed ?? false)) {
+            if (context.canPop() && (state.isSecondBodyIsDisplayed ?? false)) {
               context.pop();
             }
           },
@@ -81,6 +83,16 @@ class _HomePageState extends State<HomePage> {
                                     .toList())),
               },
             ),
+            topNavigation: SlotLayout(config: <Breakpoint, SlotLayoutConfig>{
+              Breakpoints.small: SlotLayout.from(
+                  key: const Key('top-navigation-small'),
+                  builder: (context) => const Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      LoginButton(),
+                    ],
+                  ))
+            }),
             bottomNavigation: SlotLayout(
               config: <Breakpoint, SlotLayoutConfig>{
                 Breakpoints.small: SlotLayout.from(
