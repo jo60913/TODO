@@ -11,52 +11,90 @@ class FirestoreRemoteDataSource implements ToDoRemoteDataSourceInterface {
     return await FirebaseFirestore.instance
         .collection(userID)
         .doc(collection.id)
-        .set(collection.toJson())
+        .set(collection.toJson()) //新增的方法
         .then((value) => true)
         .catchError((error) => false);
   }
 
   @override
-  Future<bool> createToDoEntry({required String userID, required String collectionId, required ToDoEntryModel entry}) async {
-    return await FirebaseFirestore.instance.collection(userID).doc(collectionId).collection('todo-entries').doc(entry.id).set(entry.toJson()).then((value) => true).catchError((error)=>false);
+  Future<bool> createToDoEntry(
+      {required String userID,
+      required String collectionId,
+      required ToDoEntryModel entry}) async {
+    return await FirebaseFirestore.instance
+        .collection(userID)
+        .doc(collectionId)
+        .collection('todo-entries')
+        .doc(entry.id)
+        .set(entry.toJson())
+        .then((value) => true)
+        .catchError((error) => false);
   }
 
   @override
-  Future<ToDoCollectionModel> getToDoCollection({required String userID, required String collectionId}) async {
-    final docSnapShot = await FirebaseFirestore.instance.collection(userID).doc(collectionId).get();
-    if(docSnapShot.exists || docSnapShot.data() != null){
+  Future<ToDoCollectionModel> getToDoCollection(
+      {required String userID, required String collectionId}) async {
+    final docSnapShot = await FirebaseFirestore.instance
+        .collection(userID)
+        .doc(collectionId)
+        .get();
+    if (docSnapShot.exists || docSnapShot.data() != null) {
       return ToDoCollectionModel.fromJson(docSnapShot.data()!);
-    }else{
-      throw FirestoreCollectionNotFoundException(id:collectionId);
+    } else {
+      throw FirestoreCollectionNotFoundException(id: collectionId);
     }
   }
 
   @override
   Future<List<String>> getToDoCollectionIds({required String userID}) async {
-    final querySnapShot = await FirebaseFirestore.instance.collection(userID).get();
+    final querySnapShot =
+        await FirebaseFirestore.instance.collection(userID).get();
     return querySnapShot.docs.map((doc) => doc.id).toList();
   }
 
   @override
-  Future<ToDoEntryModel> getToDoEntry({required String userID, required String collectionId, required String entryId}) async {
-    final docSnapShot = await FirebaseFirestore.instance.collection(userID).doc(collectionId).collection('todo-entries').doc(entryId).get();
+  Future<ToDoEntryModel> getToDoEntry(
+      {required String userID,
+      required String collectionId,
+      required String entryId}) async {
+    final docSnapShot = await FirebaseFirestore.instance
+        .collection(userID)
+        .doc(collectionId)
+        .collection('todo-entries')
+        .doc(entryId)
+        .get();
 
-    if(docSnapShot.exists || docSnapShot.data() != null){
+    if (docSnapShot.exists || docSnapShot.data() != null) {
       return ToDoEntryModel.fromJson(docSnapShot.data()!);
-    }else{
-      throw FirestoreEntryNotFoundException(id:collectionId,collectionID: collectionId);
+    } else {
+      throw FirestoreEntryNotFoundException(
+          id: collectionId, collectionID: collectionId);
     }
   }
 
   @override
-  Future<List<String>> getToDoEntryIds({required String userID, required String collectionId})async {
-    final querySnapShot = await FirebaseFirestore.instance.collection(userID).doc(collectionId).collection('todo-entries').get();
-    return querySnapShot.docs.map((doc) => doc.id ).toList();
+  Future<List<String>> getToDoEntryIds(
+      {required String userID, required String collectionId}) async {
+    final querySnapShot = await FirebaseFirestore.instance
+        .collection(userID)
+        .doc(collectionId)
+        .collection('todo-entries')
+        .get();
+    return querySnapShot.docs.map((doc) => doc.id).toList();
   }
 
   @override
-  Future<ToDoEntryModel> updateToDoEntry({required String userID, required String collectionId, required ToDoEntryModel entry}) {
-    // TODO: implement updateToDoEntry
-    throw UnimplementedError();
+  Future<ToDoEntryModel> updateToDoEntry(
+      {required String userID,
+      required String collectionId,
+      required ToDoEntryModel entry}) async {
+    await FirebaseFirestore.instance
+        .collection(userID)
+        .doc(collectionId)
+        .collection('todo-entries')
+        .doc(entry.id)
+        .set(
+            entry.toJson(), SetOptions(merge: true)); //SetOption為true才可以更新model
+    return entry;
   }
 }
