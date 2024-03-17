@@ -44,9 +44,9 @@ class FirestoreRemoteDataSource implements ToDoRemoteDataSourceInterface {
   }
 
   @override
-  Future<List<String>> getToDoEntryIds({required String userID, required String collectionId}) {
-    // TODO: implement getToDoEntryIds
-    throw UnimplementedError();
+  Future<List<String>> getToDoEntryIds({required String userID, required String collectionId})async {
+    final querySnapShot = await FirebaseFirestore.instance.collection(userID).doc(collectionId).collection('todo-entries').get();
+    return querySnapShot.docs.map((doc) => doc.id ).toList();
   }
 
   @override
