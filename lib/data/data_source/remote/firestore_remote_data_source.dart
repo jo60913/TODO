@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:todo/data/model/todo_collection_model.dart';
 import 'package:todo/data/model/todo_entry_model.dart';
+import '../../exception/exception.dart';
 import '../interface/todo_remote_data_source_interface.dart';
 
 class FirestoreRemoteDataSource implements ToDoRemoteDataSourceInterface {
@@ -27,7 +28,7 @@ class FirestoreRemoteDataSource implements ToDoRemoteDataSourceInterface {
     if(docSnapShot.exists || docSnapShot.data() != null){
       return ToDoCollectionModel.fromJson(docSnapShot.data()!);
     }else{
-      throw Exception("doc $collectionId不存在");
+      throw FirestoreCollectionNotFoundException(id:collectionId);
     }
   }
 
