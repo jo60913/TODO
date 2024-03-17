@@ -5,9 +5,14 @@ import '../interface/todo_remote_data_source_interface.dart';
 
 class FirestoreRemoteDataSource implements ToDoRemoteDataSourceInterface {
   @override
-  Future<bool> createToDoCollection({required ToDoCollectionModel collection}) {
-    // TODO: implement createToDoCollection
-    throw UnimplementedError();
+  Future<bool> createToDoCollection(
+      {required String userID, required ToDoCollectionModel collection}) async {
+    return await FirebaseFirestore.instance
+        .collection(userID)
+        .doc(collection.id)
+        .set(collection.toJson())
+        .then((value) => true)
+        .catchError((error) => false);
   }
 
   @override
@@ -49,5 +54,4 @@ class FirestoreRemoteDataSource implements ToDoRemoteDataSourceInterface {
     // TODO: implement updateToDoEntry
     throw UnimplementedError();
   }
-
 }
