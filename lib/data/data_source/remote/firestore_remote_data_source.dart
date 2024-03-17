@@ -38,9 +38,14 @@ class FirestoreRemoteDataSource implements ToDoRemoteDataSourceInterface {
   }
 
   @override
-  Future<ToDoEntryModel> getToDoEntry({required String userID, required String collectionId, required String entryId}) {
-    // TODO: implement getToDoEntry
-    throw UnimplementedError();
+  Future<ToDoEntryModel> getToDoEntry({required String userID, required String collectionId, required String entryId}) async {
+    final docSnapShot = await FirebaseFirestore.instance.collection(userID).doc(collectionId).collection('todo-entries').doc(entryId).get();
+
+    if(docSnapShot.exists || docSnapShot.data() != null){
+      return ToDoEntryModel.fromJson(docSnapShot.data()!);
+    }else{
+      throw FirestoreEntryNotFoundException(id:collectionId,collectionID: collectionId);
+    }
   }
 
   @override
