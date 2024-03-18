@@ -1,17 +1,17 @@
 import 'package:either_dart/either.dart';
 import 'package:todo/data/data_source/interface/todo_local_data_source_interface.dart';
+import 'package:todo/data/data_source/mapper/todo_collection_mapper.dart';
+import 'package:todo/data/data_source/mapper/todo_entry_mapper.dart';
 import 'package:todo/data/exception/exception.dart';
 import 'package:todo/domain/entity/todo_collection.dart';
-import 'package:todo/domain/entity/todo_color.dart';
+
 import 'package:todo/domain/entity/todo_entry.dart';
 import 'package:todo/domain/entity/unique_id.dart';
 import 'package:todo/domain/failure/failures.dart';
 import 'package:todo/domain/repository/todo_repository.dart';
 
-import '../model/todo_collection_model.dart';
-import '../model/todo_entry_model.dart';
 
-class ToDoRepositoryLocal extends ToDoRepository {
+class ToDoRepositoryLocal with ToDoCollectionMapper,ToDoEntryMapper implements ToDoRepository {
   final ToDoLocalDataSourceInterface localDataSource;
 
   ToDoRepositoryLocal({required this.localDataSource});
@@ -105,31 +105,4 @@ class ToDoRepositoryLocal extends ToDoRepository {
   }
 }
 
-ToDoEntry toDoEntryModelToEntity(ToDoEntryModel model) {
-  return ToDoEntry(
-      id: EntryId.fromUniqueString(model.id),
-      description: model.description,
-      isDone: model.isDone);
-}
 
-ToDoCollection toDoCollectionModelToEntity(ToDoCollectionModel model) {
-  return ToDoCollection(
-      id: CollectionId.fromUniqueString(model.id),
-      title: model.title,
-      color: ToDoColor(
-        colorIndex: model.colorIndex,
-      ));
-}
-
-ToDoEntryModel toDoEntryToModel(ToDoEntry entry) {
-  return ToDoEntryModel(
-      id: entry.id.value, description: entry.description, isDone: entry.isDone);
-}
-
-ToDoCollectionModel toDoCollectionToModel(ToDoCollection collection) {
-  return ToDoCollectionModel(
-    id: collection.id.value,
-    colorIndex: collection.color.colorIndex,
-    title: collection.title,
-  );
-}
