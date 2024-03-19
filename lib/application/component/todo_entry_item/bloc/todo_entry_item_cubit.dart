@@ -1,4 +1,5 @@
 import 'package:equatable/equatable.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:todo/core/use_case.dart';
 
@@ -40,11 +41,17 @@ class TodoEntryItemCubit extends Cubit<TodoEntryItemState> {
 
   Future<void> update() async {
     try {
-      final updateEntry = await uploadToDoEntry.call(
-          ToDoEntryIdsParam(collectionId: collectionId, entryId: entryId));
-      return updateEntry.fold((left) => emit(TodoEntryItemErrorState()),
-          (right) => emit(TodoEntryItemLoadedState(toDoEntry: right)));
+      if (state is TodoEntryItemLoadedState) {
+        final currentEntry = (state as TodoEntryItemLoadedState).toDoEntry;
+        final entryToUpdate =
+            currentEntry.copyWith(isDone: !currentEntry.isDone);
+        final updateEntry = await uploadToDoEntry.call(
+            ToDoEntryParams(collectionId: collectionId, entry: entryToUpdate));
+        return updateEntry.fold((left) => emit(TodoEntryItemErrorState()),
+            (right) => emit(TodoEntryItemLoadedState(toDoEntry: right)));
+      }
     } on Exception {
+      debugPrint("exception");
       emit(TodoEntryItemErrorState());
     }
   }
