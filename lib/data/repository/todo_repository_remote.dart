@@ -1,30 +1,36 @@
 import 'package:either_dart/either.dart';
-import 'package:todo/data/data_source/interface/todo_local_data_source_interface.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:todo/data/data_source/interface/todo_remote_data_source_interface.dart';
 import 'package:todo/data/data_source/mapper/todo_collection_mapper.dart';
 import 'package:todo/data/data_source/mapper/todo_entry_mapper.dart';
 import 'package:todo/data/exception/exception.dart';
 import 'package:todo/domain/entity/todo_collection.dart';
-
 import 'package:todo/domain/entity/todo_entry.dart';
 import 'package:todo/domain/entity/unique_id.dart';
 import 'package:todo/domain/failure/failures.dart';
 import 'package:todo/domain/repository/todo_repository.dart';
 
+class ToDoRepositoryRemote
+    with ToDoCollectionMapper, ToDoEntryMapper
+    implements ToDoRepository {
+  final ToDoRemoteDataSourceInterface remoteSource;
 
-class ToDoRepositoryLocal with ToDoCollectionMapper,ToDoEntryMapper implements ToDoRepository {
-  final ToDoLocalDataSourceInterface localDataSource;
+  String get userID =>
+      FirebaseAuth.instance.currentUser?.uid ?? 'some-user-id123';
 
-  ToDoRepositoryLocal({required this.localDataSource});
+  ToDoRepositoryRemote({required this.remoteSource});
 
   @override
   Future<Either<Failure, bool>> createToDoCollection(
       ToDoCollection collection) async {
     try {
-      final result = await localDataSource.createToDoCollection(
-          collection: toDoCollectionToModel(collection));
+      final result = await remoteSource.createToDoCollection(
+        userID: userID,
+        collection: toDoCollectionToModel(collection),
+      );
       return Right(result);
-    } on CacheException catch (e) {
-      return Future.value(Left(CacheFailure(stackTrace: e.toString())));
+    } on ServerException catch (e) {
+      return Future.value(Left(ServerFailure(stackTrace: e.toString())));
     } on Exception catch (e) {
       return Future.value(Left(ServerFailure(stackTrace: e.toString())));
     }
@@ -34,11 +40,13 @@ class ToDoRepositoryLocal with ToDoCollectionMapper,ToDoEntryMapper implements T
   Future<Either<Failure, bool>> createToDoEntry(
       CollectionId collectionId, ToDoEntry toDoEntry) async {
     try {
-      final result = await localDataSource.createToDoEntry(
-          collectionId: collectionId.value, entry: toDoEntryToModel(toDoEntry));
+      final result = await remoteSource.createToDoEntry(
+          userID: userID,
+          collectionId: collectionId.value,
+          entry: toDoEntryToModel(toDoEntry));
       return Right(result);
-    } on CacheException catch (e) {
-      return Future.value(Left(CacheFailure(stackTrace: e.toString())));
+    } on ServerException catch (e) {
+      return Future.value(Left(ServerFailure(stackTrace: e.toString())));
     } on Exception catch (e) {
       return Future.value(Left(ServerFailure(stackTrace: e.toString())));
     }
@@ -47,15 +55,19 @@ class ToDoRepositoryLocal with ToDoCollectionMapper,ToDoEntryMapper implements T
   @override
   Future<Either<Failure, List<ToDoCollection>>> readToDoCollections() async {
     try {
-      final collectionIds = await localDataSource.getToDoCollectionIds();
+      final collectionIds =
+          await remoteSource.getToDoCollectionIds(userID: userID);
       final List<ToDoCollection> collections = [];
-      for(String collectionId in collectionIds){
-        final collection = await localDataSource.getToDoCollection(collectionId: collectionId);
+      for (String collectionId in collectionIds) {
+        final collection = await remoteSource.getToDoCollection(
+          userID: userID,
+          collectionId: collectionId,
+        );
         collections.add(toDoCollectionModelToEntity(collection));
       }
       return Right(collections);
-    } on CacheException catch (e) {
-      return Future.value(Left(CacheFailure(stackTrace: e.toString())));
+    } on ServerException catch (e) {
+      return Future.value(Left(ServerFailure(stackTrace: e.toString())));
     } on Exception catch (e) {
       return Future.value(Left(ServerFailure(stackTrace: e.toString())));
     }
@@ -65,13 +77,14 @@ class ToDoRepositoryLocal with ToDoCollectionMapper,ToDoEntryMapper implements T
   Future<Either<Failure, ToDoEntry>> readToDoEntry(
       CollectionId collectionId, EntryId entryId) async {
     try {
-      final result = await localDataSource.getToDoEntry(
+      final result = await remoteSource.getToDoEntry(
+        userID: userID,
         collectionId: collectionId.value,
         entryId: entryId.value,
       );
       return Right(toDoEntryModelToEntity(result));
-    } on CacheException catch (e) {
-      return Future.value(Left(CacheFailure(stackTrace: e.toString())));
+    } on ServerException catch (e) {
+      return Future.value(Left(ServerFailure(stackTrace: e.toString())));
     } on Exception catch (e) {
       return Future.value(Left(ServerFailure(stackTrace: e.toString())));
     }
@@ -81,11 +94,11 @@ class ToDoRepositoryLocal with ToDoCollectionMapper,ToDoEntryMapper implements T
   Future<Either<Failure, List<EntryId>>> readToDoEntryIds(
       CollectionId collectionId) async {
     try {
-      final entries = await localDataSource.getToDoEntryIds(
-          collectionId: collectionId.value);
+      final entries = await remoteSource.getToDoEntryIds(
+          userID: userID, collectionId: collectionId.value);
       return Right(entries.map((e) => EntryId.fromUniqueString(e)).toList());
-    } on CacheException catch (e) {
-      return Future.value(Left(CacheFailure(stackTrace: e.toString())));
+    } on ServerException catch (e) {
+      return Future.value(Left(ServerFailure(stackTrace: e.toString())));
     } on Exception catch (e) {
       return Future.value(Left(ServerFailure(stackTrace: e.toString())));
     }
@@ -95,14 +108,16 @@ class ToDoRepositoryLocal with ToDoCollectionMapper,ToDoEntryMapper implements T
   Future<Either<Failure, ToDoEntry>> updateToDoEntry(
       {required CollectionId collectionId, required ToDoEntry entry}) async {
     try {
-      final updateEntry = await localDataSource.updateToDoEntry(collectionId: collectionId.value, entryId: entry.id.value);
+      final updateEntry = await remoteSource.updateToDoEntry(
+        userID: userID,
+        collectionId: collectionId.value,
+        entry: toDoEntryToModel(entry),
+      );
       return Right(toDoEntryModelToEntity(updateEntry));
-    } on CacheException catch (e) {
-      return Future.value(Left(CacheFailure(stackTrace: e.toString())));
+    } on ServerException catch (e) {
+      return Future.value(Left(ServerFailure(stackTrace: e.toString())));
     } on Exception catch (e) {
       return Future.value(Left(ServerFailure(stackTrace: e.toString())));
     }
   }
 }
-
-

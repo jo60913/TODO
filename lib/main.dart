@@ -5,8 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:todo/application/app/basic_app.dart';
 import 'package:todo/application/app/cubit/auth_cubit.dart';
-import 'package:todo/data/data_source/local/hive_local_data_source.dart';
-import 'package:todo/data/repository/todo_repository_local.dart';
+import 'package:todo/data/data_source/remote/firestore_remote_data_source.dart';
+import 'package:todo/data/repository/todo_repository_remote.dart';
 import 'package:todo/domain/repository/todo_repository.dart';
 import 'package:todo/firebase_options.dart';
 
@@ -19,8 +19,11 @@ Future<void> main() async {
     ui_auth.PhoneAuthProvider(),
   ]);
 
-  final dataSource = HiveLocalDataSource();
-  dataSource.init();
+  // final dataSource = HiveLocalDataSource();  //本機資料庫
+  // dataSource.init();
+
+  final remoteDataSource = FirestoreRemoteDataSource();
+
   final authCubit = AuthCubit();
   FirebaseAuth.instance.authStateChanges().listen((event) { //一但使用者登入或登出時就會觸發
     debugPrint("user是否為空${event == null}");
@@ -28,7 +31,7 @@ Future<void> main() async {
   });
 
   runApp(RepositoryProvider<ToDoRepository>(
-      create: (context) => ToDoRepositoryLocal(localDataSource: dataSource),
+      create: (context) => ToDoRepositoryRemote(remoteSource: remoteDataSource),
       child: BlocProvider<AuthCubit>(
         create: (context) => authCubit,
         child: const BaseApp(),

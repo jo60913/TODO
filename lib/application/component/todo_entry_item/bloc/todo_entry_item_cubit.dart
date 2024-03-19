@@ -1,8 +1,6 @@
 import 'package:equatable/equatable.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:todo/core/use_case.dart';
-
 import '../../../../domain/entity/todo_entry.dart';
 import '../../../../domain/entity/unique_id.dart';
 import '../../../../domain/usecase/load_todo_entry.dart';
@@ -51,7 +49,6 @@ class TodoEntryItemCubit extends Cubit<TodoEntryItemState> {
             (right) => emit(TodoEntryItemLoadedState(toDoEntry: right)));
       }
     } on Exception {
-      debugPrint("exception");
       emit(TodoEntryItemErrorState());
     }
   }
