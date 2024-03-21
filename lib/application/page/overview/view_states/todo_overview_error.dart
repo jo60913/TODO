@@ -6,7 +6,7 @@ class ToDoOverviewError extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const Card(
-      child: Text('ERROR, please try again'),
+      child: Text('錯誤，請稍後再試'),
     );
   }
 }
