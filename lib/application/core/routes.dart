@@ -1,6 +1,11 @@
+import 'dart:js';
+
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_ui_auth/firebase_ui_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:todo/application/app/cubit/auth_cubit.dart';
 import 'package:todo/application/page/create_todo_collection_page/create_todo_collection_page.dart';
 import 'package:todo/application/page/create_todo_entry/create_todo_entry_page.dart';
 import 'package:todo/application/page/dashboard/dashboard.dart';
@@ -21,6 +26,13 @@ final routes = GoRouter(
     initialLocation: '$_basePath/${DashBoardPage.pageConfig.name}',
     observers: [GoRouterObserver()],
     navigatorKey: _rootNavigatorKey,
+    redirect: (context,state) async {
+      final result = await FirebaseAuth.instance.authStateChanges().first;
+
+      if(result == null) {
+        return '/login';
+      }
+    },
     routes: [
       GoRoute(
           name: 'login',
@@ -30,10 +42,11 @@ final routes = GoRouter(
                   AuthStateChangeAction<SignedIn>((context, signedIn) {
                     //使用者登入
                     debugPrint('登入成功');
-                    context.pushNamed(
-                      HomePage.pageConfig.name,
-                      params: {'tab': OverViewPage.pageConfig.name},
-                    );
+                    context.pushNamed(DashBoardPage.pageConfig.name);
+                    // context.pushNamed(
+                    //   HomePage.pageConfig.name,
+                    //   params: {'tab': OverViewPage.pageConfig.name},
+                    // );
                   }),
                   AuthStateChangeAction<UserCreated>((context, signedIn) {
                     //首次創建使用者後登入
@@ -149,5 +162,12 @@ final routes = GoRouter(
                     state.params['collectionId'] ?? ''),
               ),
             );
+          }),
+      GoRoute(
+          name: DashBoardPage.pageConfig.name,
+          path: '$_basePath/${DashBoardPage.pageConfig.name}',
+          builder: (context, state) {
+           debugPrint('state ${state}');
+            return DashBoardPage.pageConfig.child;
           })
     ]);
