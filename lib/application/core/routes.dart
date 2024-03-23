@@ -1,11 +1,7 @@
-import 'dart:js';
-
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_ui_auth/firebase_ui_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
-import 'package:todo/application/app/cubit/auth_cubit.dart';
 import 'package:todo/application/page/create_todo_collection_page/create_todo_collection_page.dart';
 import 'package:todo/application/page/create_todo_entry/create_todo_entry_page.dart';
 import 'package:todo/application/page/dashboard/dashboard.dart';
@@ -31,6 +27,8 @@ final routes = GoRouter(
 
       if(result == null) {
         return '/login';
+      }else{
+        return null;
       }
     },
     routes: [
@@ -167,7 +165,6 @@ final routes = GoRouter(
           name: DashBoardPage.pageConfig.name,
           path: '$_basePath/${DashBoardPage.pageConfig.name}',
           builder: (context, state) {
-           debugPrint('state ${state}');
             return DashBoardPage.pageConfig.child;
           })
     ]);
