@@ -1,6 +1,5 @@
 import 'package:either_dart/either.dart';
 import 'package:todo/domain/entity/todo_entry.dart';
-
 import '../../domain/entity/todo_collection.dart';
 import '../../domain/entity/todo_color.dart';
 import '../../domain/entity/unique_id.dart';
@@ -98,5 +97,11 @@ class ToDoRepositoryMock implements ToDoRepository {
   Future<Either<Failure, bool>> createToDoEntry(_,ToDoEntry entry) {
     todoEntries.add(entry);
     return Future.delayed(const Duration(milliseconds: 250), () => const Right(true));
+  }
+
+  @override
+  Future<Either<Failure, List<ToDoEntry>>> getAllEntryByCollection(CollectionId collectionId) {
+    // TODO: implement getAllEntryByCollection
+    throw UnimplementedError();
   }
 }

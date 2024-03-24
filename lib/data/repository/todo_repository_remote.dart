@@ -120,4 +120,23 @@ class ToDoRepositoryRemote
       return Future.value(Left(ServerFailure(stackTrace: e.toString())));
     }
   }
+
+  @override
+  Future<Either<Failure, List<ToDoEntry>>> getAllEntryByCollection(
+      CollectionId collectionId) async {
+    try {
+      final entries = await remoteSource.getAllEntryByCollection(
+          userID: userID, collectionID: collectionId.value);
+      return Right(entries
+          .map((e) => ToDoEntry(
+              id: EntryId.fromUniqueString(e.id),
+              description: e.description,
+              isDone: e.isDone))
+          .toList());
+    } on ServerException catch (e) {
+      return Future.value(Left(ServerFailure(stackTrace: e.toString())));
+    } on Exception catch (e) {
+      return Future.value(Left(ServerFailure(stackTrace: e.toString())));
+    }
+  }
 }

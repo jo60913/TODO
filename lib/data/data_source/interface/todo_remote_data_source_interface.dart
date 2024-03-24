@@ -38,4 +38,9 @@ abstract class ToDoRemoteDataSourceInterface {
     required String collectionId,
     required ToDoEntryModel entry,
   });
+
+  Future<List<ToDoEntryModel>> getAllEntryByCollection({
+    required String userID,
+    required String collectionID,
+  });
 }

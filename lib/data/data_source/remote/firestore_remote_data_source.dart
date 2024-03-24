@@ -97,4 +97,14 @@ class FirestoreRemoteDataSource implements ToDoRemoteDataSourceInterface {
             entry.toJson(), SetOptions(merge: true)); //SetOption為true才可以更新model
     return entry;
   }
+
+  @override
+  Future<List<ToDoEntryModel>> getAllEntryByCollection({required String userID, required String collectionID}) async {
+    final querySnapShot = await FirebaseFirestore.instance
+        .collection(userID)
+        .doc(collectionID)
+        .collection('todo-entries')
+        .get();
+    return querySnapShot.docs.map((doc) => ToDoEntryModel.fromJson(doc.data())).toList();
+  }
 }

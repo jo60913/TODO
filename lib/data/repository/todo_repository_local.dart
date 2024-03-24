@@ -4,7 +4,6 @@ import 'package:todo/data/data_source/mapper/todo_collection_mapper.dart';
 import 'package:todo/data/data_source/mapper/todo_entry_mapper.dart';
 import 'package:todo/data/exception/exception.dart';
 import 'package:todo/domain/entity/todo_collection.dart';
-
 import 'package:todo/domain/entity/todo_entry.dart';
 import 'package:todo/domain/entity/unique_id.dart';
 import 'package:todo/domain/failure/failures.dart';
@@ -102,6 +101,12 @@ class ToDoRepositoryLocal with ToDoCollectionMapper,ToDoEntryMapper implements T
     } on Exception catch (e) {
       return Future.value(Left(ServerFailure(stackTrace: e.toString())));
     }
+  }
+
+  @override
+  Future<Either<Failure, List<ToDoEntry>>> getAllEntryByCollection(CollectionId collectionId) {
+    // TODO: implement getAllEntryByCollection
+    throw UnimplementedError();
   }
 }
 
