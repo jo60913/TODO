@@ -20,7 +20,7 @@ class TodoDashboardCubit extends Cubit<ToDoDashboardState> {
       }else{
         emit(ToDoDashboardLoaded(collectionAndEntry: collections.right));
       }
-    } on Exception catch(e){
+    } on Exception{
       emit(const ToDoDashboardError());
     }
   }
