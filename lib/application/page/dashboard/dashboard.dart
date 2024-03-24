@@ -1,21 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:todo/application/core/page_config.dart';
 
-class DashBoardPage extends StatefulWidget {
-  const DashBoardPage({super.key});
+class DashBoardPage extends StatelessWidget {
+  const DashBoardPage({Key? key}) : super(key: key);
 
   static const pageConfig = PageConfig(
       icon: Icons.dashboard_rounded, name: 'dashboard', child: DashBoardPage());
 
   @override
-  State<DashBoardPage> createState() => _DashBoardPageState();
-}
-
-class _DashBoardPageState extends State<DashBoardPage> {
-  @override
   Widget build(BuildContext context) {
-    return Container(
-      color: Colors.purpleAccent,
-    );
+    return const Placeholder();
   }
 }
+
