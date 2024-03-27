@@ -33,6 +33,7 @@ dependencies:
   meta: ^1.10.0
   firebase_crashlytics: ^3.4.18
   path_provider: ^2.1.0
+  fl_chart: ^0.66.2
 
 dev_dependencies:
   flutter_test:
