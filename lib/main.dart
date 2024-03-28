@@ -18,7 +18,6 @@ import 'package:todo/firebase_options.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  window.document.onContextMenu.listen((evt) => evt.preventDefault());    //關閉網頁預設右鍵(會顯示上一頁、重新載入、列印等功能的視窗)
 
   if(!kIsWeb || !kDebugMode){   //Crashlytics不支援網頁，且非release模式也不使用不免測試的錯誤上傳到Crashlytics
     FlutterError.onError = (errorDetails) {
