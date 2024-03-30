@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
@@ -6,16 +7,18 @@ import 'package:todo/application/page/create_todo_entry/create_todo_entry_page.d
 import 'package:todo/application/page/detail/bloc/to_do_detail_cubit.dart';
 import 'package:todo/domain/entity/unique_id.dart';
 
-import '../../create_todo_collection_page/create_todo_collection_page.dart';
-
-
-class ToDoDetailLoaded extends StatelessWidget {
+class ToDoDetailLoaded extends StatefulWidget {
   final List<EntryId> entryIds;
   final CollectionId collectionId;
 
   const ToDoDetailLoaded(
       {super.key, required this.collectionId, required this.entryIds});
 
+  @override
+  State<ToDoDetailLoaded> createState() => _ToDoDetailLoadedState();
+}
+
+class _ToDoDetailLoadedState extends State<ToDoDetailLoaded> {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -24,11 +27,20 @@ class ToDoDetailLoaded extends StatelessWidget {
           child: Stack(
             children: [
               ListView.builder(
-                itemCount: entryIds.length,
+                itemCount: widget.entryIds.length,
                 itemBuilder: (context, index) =>
-                    ToDoEntryItemProvider(
-                      entryId: entryIds[index],
-                      collectionId: collectionId,
+                    GestureDetector(
+                      child: ToDoEntryItemProvider(
+                        entryId: widget.entryIds[index],
+                        collectionId: widget.collectionId,
+                      ),
+                      onLongPress: (){},
+                      onSecondaryTapDown: (detail){
+                        if(kIsWeb){
+                          debugPrint("右鍵 entry id ${widget.entryIds[index]}");
+                          showPopupMenu(context,widget.entryIds[index],detail.globalPosition);
+                        }
+                      },
                     ),
               ),
               Align(
@@ -40,7 +52,7 @@ class ToDoDetailLoaded extends StatelessWidget {
                       context.pushNamed(
                           CreateToDoEntryPage.pageConfig.name,
                           extra: CreateToDoEntryPageExtra(
-                              collectionId: collectionId,
+                              collectionId: widget.collectionId,
                               toDoEntryItemAddedCallback: context.read<ToDoDetailCubit>().fetch)),
                   child: const Icon(Icons.add_rounded),
                 ),
@@ -49,4 +61,26 @@ class ToDoDetailLoaded extends StatelessWidget {
           ),
         ));
   }
+
+  void showPopupMenu(BuildContext context, EntryId entryID, Offset position) async {
+    await showMenu(
+      context: context,
+      position: RelativeRect.fromLTRB(position.dx, position.dy, 0, 0),
+      items: const [
+        PopupMenuItem<String>(
+            value: 'Done',
+            child: Text('刪除')),
+      ],
+      elevation: 8.0,
+    ).then((value){
+      if(value == 'Done'){
+        debugPrint("刪除 ${entryID}");
+        //TODO 這邊到時候usecase要加await
+
+        context.read<ToDoDetailCubit>().fetch();
+      }
+    });
+  }
 }
+
+
