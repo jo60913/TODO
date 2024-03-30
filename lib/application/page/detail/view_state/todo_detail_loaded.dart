@@ -38,7 +38,7 @@ class _ToDoDetailLoadedState extends State<ToDoDetailLoaded> {
                       onSecondaryTapDown: (detail){
                         if(kIsWeb){
                           debugPrint("右鍵 entry id ${widget.entryIds[index]}");
-                          showPopupMenu(context,widget.entryIds[index],detail.globalPosition);
+                          showPopupMenu(context,widget.entryIds[index],widget.collectionId,detail.globalPosition);
                         }
                       },
                     ),
@@ -62,7 +62,7 @@ class _ToDoDetailLoadedState extends State<ToDoDetailLoaded> {
         ));
   }
 
-  void showPopupMenu(BuildContext context, EntryId entryID, Offset position) async {
+  void showPopupMenu(BuildContext context, EntryId entryID,CollectionId collectionID, Offset position) async {
     await showMenu(
       context: context,
       position: RelativeRect.fromLTRB(position.dx, position.dy, 0, 0),
@@ -74,7 +74,7 @@ class _ToDoDetailLoadedState extends State<ToDoDetailLoaded> {
       elevation: 8.0,
     ).then((value){
       if(value == 'Done'){
-        debugPrint("刪除 ${entryID}");
+        debugPrint("刪除 collectionID ${collectionID} entryid${entryID}");
         //TODO 這邊到時候usecase要加await
 
         context.read<ToDoDetailCubit>().fetch();
