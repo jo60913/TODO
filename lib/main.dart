@@ -1,3 +1,4 @@
+import 'dart:html';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
@@ -14,6 +15,9 @@ import 'package:todo/firebase_options.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  if(kIsWeb){
+    window.document.onContextMenu.listen((evt) => evt.preventDefault());    //關閉網頁預設右鍵(會顯示上一頁、重新載入、列印等功能的視窗)
+  }
 
   if(!kIsWeb || !kDebugMode){   //Crashlytics不支援網頁，且非release模式也不使用不免測試的錯誤上傳到Crashlytics
     FlutterError.onError = (errorDetails) {
