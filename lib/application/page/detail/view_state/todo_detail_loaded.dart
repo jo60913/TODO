@@ -11,7 +11,8 @@ import 'package:todo/domain/entity/unique_id.dart';
 import '../../../../core/use_case.dart';
 import '../../../../domain/repository/todo_repository.dart';
 import '../../../../domain/usecase/delete_todo_entry.dart';
-import '../delete/bloc/todo_entry_delete_cubit.dart';
+import '../delete_todo_entry/bloc/todo_entry_delete_cubit.dart';
+
 
 class ToDoDetailLoaded extends StatefulWidget {
   final List<EntryId> entryIds;
