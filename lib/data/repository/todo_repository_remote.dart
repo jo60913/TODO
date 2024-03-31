@@ -139,4 +139,19 @@ class ToDoRepositoryRemote
       return Future.value(Left(ServerFailure(stackTrace: e.toString())));
     }
   }
+
+  @override
+  Future<Either<Failure, bool>> deleteToDoEntry(CollectionId collectionId, ToDoEntry toDoEntry) async {
+    try {
+      final result = await remoteSource.deleteToDoEntry(
+          userID: userID,
+          collectionId: collectionId.value,
+          entry: toDoEntryToModel(toDoEntry));
+      return Right(result);
+    } on ServerException catch (e) {
+      return Future.value(Left(ServerFailure(stackTrace: e.toString())));
+    } on Exception catch (e) {
+      return Future.value(Left(ServerFailure(stackTrace: e.toString())));
+    }
+  }
 }

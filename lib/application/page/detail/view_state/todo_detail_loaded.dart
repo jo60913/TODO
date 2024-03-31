@@ -5,7 +5,13 @@ import 'package:go_router/go_router.dart';
 import 'package:todo/application/component/todo_entry_item/todo_entry_item.dart';
 import 'package:todo/application/page/create_todo_entry/create_todo_entry_page.dart';
 import 'package:todo/application/page/detail/bloc/to_do_detail_cubit.dart';
+import 'package:todo/domain/entity/todo_entry.dart';
 import 'package:todo/domain/entity/unique_id.dart';
+
+import '../../../../core/use_case.dart';
+import '../../../../domain/repository/todo_repository.dart';
+import '../../../../domain/usecase/delete_todo_entry.dart';
+import '../delete/bloc/todo_entry_delete_cubit.dart';
 
 class ToDoDetailLoaded extends StatefulWidget {
   final List<EntryId> entryIds;
@@ -62,25 +68,37 @@ class _ToDoDetailLoadedState extends State<ToDoDetailLoaded> {
         ));
   }
 
-  void showPopupMenu(BuildContext context, EntryId entryID,CollectionId collectionID, Offset position) async {
+  void showPopupMenu(
+    BuildContext context,
+    EntryId entryID,
+    CollectionId collectionID,
+    Offset position,
+  ) async {
     await showMenu(
       context: context,
       position: RelativeRect.fromLTRB(position.dx, position.dy, 0, 0),
       items: const [
-        PopupMenuItem<String>(
-            value: 'Done',
-            child: Text('刪除')),
+        PopupMenuItem<String>(value: 'Done', child: Text('刪除')),
       ],
       elevation: 8.0,
-    ).then((value){
-      if(value == 'Done'){
-        debugPrint("刪除 collectionID ${collectionID} entryid${entryID}");
-        //TODO 這邊到時候usecase要加await
-
-        context.read<ToDoDetailCubit>().fetch();
+    ).then((value) {
+      if (value == 'Done') {
+        TodoEntryDeleteCubit(
+          usecase: DeleteToDoEntry(
+              toDoRepository: RepositoryProvider.of<ToDoRepository>(context)),
+          params: ToDoEntryParams(
+              collectionId: collectionID,
+              entry: ToDoEntry(description: '', id: entryID, isDone: false)),
+        )..deleteToDoCollections()
+            .then((value) => context.read<ToDoDetailCubit>().fetch());
+        // BlocProvider<TodoEntryDeleteCubit>(
+        //   create:(context)=> TodoEntryDeleteCubit(
+        //     usecase: DeleteToDoEntry(toDoRepository: RepositoryProvider.of<ToDoRepository>(context)),
+        //     params: ToDoEntryParams(collectionId: collectionID,entry: ToDoEntry(description: '', id: entryID, isDone: false)),
+        //   )..deleteToDoCollections(),
+        //   child: Dialog()
+        // );
       }
     });
   }
 }
-
-

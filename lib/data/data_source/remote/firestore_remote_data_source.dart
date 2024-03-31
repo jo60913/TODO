@@ -107,4 +107,16 @@ class FirestoreRemoteDataSource implements ToDoRemoteDataSourceInterface {
         .get();
     return querySnapShot.docs.map((doc) => ToDoEntryModel.fromJson(doc.data())).toList();
   }
+
+  @override
+  Future<bool> deleteToDoEntry({required String userID, required String collectionId, required ToDoEntryModel entry}) async {
+    return await FirebaseFirestore.instance
+        .collection(userID)
+        .doc(collectionId)
+        .collection('todo-entries')
+        .doc(entry.id)
+        .delete()
+        .then((value) => true)
+        .catchError((error) => false);
+  }
 }

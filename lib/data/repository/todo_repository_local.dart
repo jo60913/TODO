@@ -108,6 +108,12 @@ class ToDoRepositoryLocal with ToDoCollectionMapper,ToDoEntryMapper implements T
     // TODO: implement getAllEntryByCollection
     throw UnimplementedError();
   }
+
+  @override
+  Future<Either<Failure, bool>> deleteToDoEntry(CollectionId collectionId, ToDoEntry toDoEntry) {
+    // TODO: implement deleteToDoEntry
+    throw UnimplementedError();
+  }
 }
 
 

@@ -43,4 +43,10 @@ abstract class ToDoRemoteDataSourceInterface {
     required String userID,
     required String collectionID,
   });
+
+  Future<bool> deleteToDoEntry({
+    required String userID,
+    required String collectionId,
+    required ToDoEntryModel entry,
+  });
 }
