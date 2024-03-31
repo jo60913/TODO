@@ -21,7 +21,7 @@ class ToDoDashBoardLoadedPage extends StatelessWidget {
       return MapEntry(element.title, rate);}).toList();
     int itemCount = list.length;
     const Duration animDuration = Duration(milliseconds: 250);
-    double successRate = successCount / itemCount;
+    double successRate = itemCount == 0 ? 0 : successCount / itemCount;
     return Column(mainAxisAlignment: MainAxisAlignment.center, children: [
       Text('完成率 ${(successRate*100).round()} %'),
       const SizedBox(height: 50,),
