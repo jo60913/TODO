@@ -1,7 +1,6 @@
 import 'package:either_dart/either.dart';
 import 'package:todo/domain/entity/todo_entry.dart';
 import 'package:todo/domain/entity/unique_id.dart';
-
 import '../entity/todo_collection.dart';
 import '../failure/failures.dart';
 
@@ -14,4 +13,5 @@ abstract class ToDoRepository {
   Future<Either<Failure, bool>> createToDoEntry(CollectionId collectionId,ToDoEntry toDoEntry);
   Future<Either<Failure, List<ToDoEntry>>> getAllEntryByCollection(CollectionId collectionId);
   Future<Either<Failure, bool>> deleteToDoEntry(CollectionId collectionId,ToDoEntry toDoEntry);
+  Future<Either<Failure, bool>> deleteToCollection(CollectionId collectionId);
 }

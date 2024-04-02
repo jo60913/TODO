@@ -6,9 +6,12 @@ import 'package:todo/application/page/create_todo_collection_page/create_todo_co
 import 'package:todo/application/page/detail/todo_detail.dart';
 import 'package:todo/application/page/home/bloc/navigation_todo_cubit.dart';
 import 'package:todo/application/page/overview/bloc/todo_overview_cubit.dart';
+import 'package:todo/core/use_case.dart';
+import 'package:todo/domain/entity/unique_id.dart';
+import 'package:todo/domain/usecase/delete_todo_collection.dart';
 import 'package:todo/resource/app_color.dart';
-
 import '../../../../domain/entity/todo_collection.dart';
+import '../../../../domain/repository/todo_repository.dart';
 
 class ToDoOverviewLoaded extends StatelessWidget {
   const ToDoOverviewLoaded({super.key, required this.collections});
@@ -58,6 +61,7 @@ class ToDoOverviewLoaded extends StatelessWidget {
                           onSelected: (String value){
                             if(value == 'delete'){
                              debugPrint('按下刪除');
+                             deleteCollection(item.id.value,context);
                             }
                           },
                         ),
@@ -85,5 +89,11 @@ class ToDoOverviewLoaded extends StatelessWidget {
           )
       ],
     );
+  }
+
+  void deleteCollection(String value, BuildContext context) {
+    final usecase = DeleteToDoCollection(toDoRepository: RepositoryProvider.of<ToDoRepository>(context));
+    usecase.call(CollectionIdsParam(collectionId: CollectionId.fromUniqueString(value)))
+    .then((value) => context.read<ToDoOverviewCubit>().readToDoCollections());
   }
 }

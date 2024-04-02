@@ -119,4 +119,24 @@ class FirestoreRemoteDataSource implements ToDoRemoteDataSourceInterface {
         .then((value) => true)
         .catchError((error) => false);
   }
+
+  @override
+  Future<bool> deleteCollection({required String userID, required String collectionId}) async{
+    var collection = await FirebaseFirestore.instance
+        .collection(userID)
+        .doc(collectionId)
+        .collection('todo-entries')
+        .get();
+
+    for(var doc in collection.docs){
+      await doc.reference.delete();
+    }
+
+    return await FirebaseFirestore.instance
+        .collection(userID)
+        .doc(collectionId)
+        .delete()
+        .then((value) => true)
+        .catchError((error)=>false);
+  }
 }
