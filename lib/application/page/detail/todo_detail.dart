@@ -9,6 +9,7 @@ import 'package:todo/domain/entity/unique_id.dart';
 import 'package:todo/domain/repository/todo_repository.dart';
 import 'package:todo/domain/usecase/load_todo_entry_ids_for_collection.dart';
 
+//代辦事項(TodoEntry)
 class ToDoDetailPageProvider extends StatelessWidget {
   final CollectionId collectionId;
 
