@@ -12,6 +12,7 @@ import 'package:todo/domain/usecase/delete_todo_collection.dart';
 import 'package:todo/resource/app_color.dart';
 import '../../../../domain/entity/todo_collection.dart';
 import '../../../../domain/repository/todo_repository.dart';
+import '../../detail/bloc/to_do_detail_cubit.dart';
 
 class ToDoOverviewLoaded extends StatelessWidget {
   const ToDoOverviewLoaded({super.key, required this.collections});
@@ -94,6 +95,9 @@ class ToDoOverviewLoaded extends StatelessWidget {
   void deleteCollection(String value, BuildContext context) {
     final usecase = DeleteToDoCollection(toDoRepository: RepositoryProvider.of<ToDoRepository>(context));
     usecase.call(CollectionIdsParam(collectionId: CollectionId.fromUniqueString(value)))
-    .then((value) => context.read<ToDoOverviewCubit>().readToDoCollections());
+    .then((value) {
+      context.read<ToDoOverviewCubit>().readToDoCollections();
+      context.read<ToDoDetailCubit>().fetch();
+    });
   }
 }
