@@ -18,4 +18,8 @@ class NavigationTodoCubit extends Cubit<NavigationTodoCubitState> {
           selectedCollectionId: state.selectedCollectionId));
     }
   }
+
+  void refreshToDoList(){
+    emit(const NavigationTodoCubitState(selectedCollectionId: null));
+  }
 }
