@@ -42,3 +42,5 @@ app.*.map.json
 /android/app/profile
 /android/app/release
 /lib/firebase_options.dart
+/lib/application/core/todo-app-firebase-adminsdk.json
+/lib/application/core/access_firebase_token.dart

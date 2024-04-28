@@ -1,3 +1,5 @@
+import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:todo/application/core/access_firebase_token.dart';
 import 'package:universal_html/html.dart' as html;
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -12,6 +14,7 @@ import 'package:todo/data/data_source/remote/firestore_remote_data_source.dart';
 import 'package:todo/data/repository/todo_repository_remote.dart';
 import 'package:todo/domain/repository/todo_repository.dart';
 import 'package:todo/firebase_options.dart';
+import 'dart:io';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -33,6 +36,13 @@ Future<void> main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+
+  if(Platform.isAndroid) {
+    AccessTokenFirebase accessTokenFirebase = AccessTokenFirebase();
+    String token = await accessTokenFirebase.getAccessToken();
+    print("token 內容 : ${token}");
+  }
+
   ui_auth.FirebaseUIAuth.configureProviders([
     ui_auth.PhoneAuthProvider(),
   ]);
