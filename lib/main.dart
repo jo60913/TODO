@@ -1,5 +1,4 @@
-import 'package:firebase_messaging/firebase_messaging.dart';
-import 'package:todo/application/core/access_firebase_token.dart';
+import 'package:todo/application/core/firebase_api.dart';
 import 'package:universal_html/html.dart' as html;
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -38,9 +37,7 @@ Future<void> main() async {
   );
 
   if(Platform.isAndroid) {
-    AccessTokenFirebase accessTokenFirebase = AccessTokenFirebase();
-    String token = await accessTokenFirebase.getAccessToken();
-    print("token 內容 : ${token}");
+    await FirebaseApi().initNotifications();
   }
 
   ui_auth.FirebaseUIAuth.configureProviders([
