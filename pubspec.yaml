@@ -50,8 +50,8 @@ flutter:
 
 
   uses-material-design: true
-  assets:
-    - lib/application/core/todo-app-firebase-adminsdk.json
+#  assets:
+#    - lib/application/core/todo-app-firebase-adminsdk.json
 #   To add assets to your application, add an assets section, like this:
 
 
