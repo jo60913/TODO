@@ -23,7 +23,7 @@ class ToDoOverviewLoaded extends StatelessWidget {
   Widget build(BuildContext context) {
     return Stack(
       children: [
-        ListView.builder(
+        collections.isNotEmpty ?ListView.builder(
             itemCount: collections.length,
             itemBuilder: (context, index) {
               final item = collections[index];
@@ -69,7 +69,9 @@ class ToDoOverviewLoaded extends StatelessWidget {
                         leading: const Icon(Icons.circle),
                         title: Text(item.title),
                       ));
-            }),
+            }) : const Center(
+          child: Text("沒有資料"),
+        ),
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: Align(
@@ -89,7 +91,7 @@ class ToDoOverviewLoaded extends StatelessWidget {
             ),
           )
       ],
-    );
+    ) ;
   }
 
   void deleteCollection(String value, BuildContext context) {
