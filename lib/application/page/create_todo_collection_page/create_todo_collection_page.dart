@@ -63,6 +63,9 @@ class _CreateToDoCollectionPageState extends State<CreateToDoCollectionPage> {
               decoration: const InputDecoration(labelText: "顏色"),
               onChanged: (value)=>context.read<CreateTodoCollectionPageCubit>().colorChange(value),
               validator: (value) {
+                if(value == null || value.isEmpty) {
+                  return "請輸入數字";
+                }
                 if (value != null && value.isNotEmpty) {
                   final parseColorIndex = int.parse(value);
                   if (parseColorIndex == null ||
