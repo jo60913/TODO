@@ -59,6 +59,9 @@ class ToDoRepositoryRemote
           await remoteSource.getToDoCollectionIds(userID: userID);
       final List<ToDoCollection> collections = [];
       for (String collectionId in collectionIds) {
+        if(collectionId == "notification") {
+          continue;
+        }
         final collection = await remoteSource.getToDoCollection(
           userID: userID,
           collectionId: collectionId,
