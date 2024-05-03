@@ -35,7 +35,7 @@ class _ToDoDetailLoadedState extends State<ToDoDetailLoaded> {
           padding: const EdgeInsets.all(8.0),
           child: Stack(
             children: [
-              ListView.builder(
+              widget.entryIds.isNotEmpty ? ListView.builder(
                 itemCount: widget.entryIds.length,
                 itemBuilder: (context, index) =>
                     GestureDetector(
@@ -56,7 +56,7 @@ class _ToDoDetailLoadedState extends State<ToDoDetailLoaded> {
                         }
                       },
                     ),
-              ),
+              ) : const Center(child: Text("沒有資料 請點選右下角+新增"),),
               Align(
                 alignment: Alignment.bottomRight,
                 child: FloatingActionButton(
