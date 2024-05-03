@@ -66,13 +66,10 @@ class _CreateToDoCollectionPageState extends State<CreateToDoCollectionPage> {
                 if(value == null || value.isEmpty) {
                   return "請輸入數字";
                 }
-                if (value != null && value.isNotEmpty) {
-                  final parseColorIndex = int.parse(value);
-                  if (parseColorIndex == null ||
-                      parseColorIndex < 0 ||
-                      parseColorIndex > ToDoColor.predefinedColors.length) {
-                    return '請輸入0到${ToDoColor.predefinedColors.length - 1}之間的數';
-                  }
+                final parseColorIndex = int.parse(value);
+                if (parseColorIndex < 0 ||
+                    parseColorIndex > ToDoColor.predefinedColors.length) {
+                  return '請輸入0到${ToDoColor.predefinedColors.length - 1}之間的數';
                 }
                 return null;
               },
