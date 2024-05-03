@@ -12,6 +12,11 @@ class ToDoDashBoardLoadedPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final list = collections.expand((e) => e.entryList).toList();
+    if(list.isEmpty){
+      return const Center(
+        child: Text("請至DashBoard頁面中新增待辦事項"),
+      );
+    }
     int successCount = list.where((element) => (element.isDone == true)).length;
     collectionSuccess = collections.map((element) {
       if(element.entryList.isEmpty) {
