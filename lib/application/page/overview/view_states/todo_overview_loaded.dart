@@ -70,7 +70,7 @@ class ToDoOverviewLoaded extends StatelessWidget {
                         title: Text(item.title),
                       ));
             }) : const Center(
-          child: Text("沒有資料"),
+          child: Text("沒有資料 請點選右下角+新增"),
         ),
           Padding(
             padding: const EdgeInsets.all(8.0),
