@@ -14,4 +14,5 @@ abstract class ToDoRepository {
   Future<Either<Failure, List<ToDoEntry>>> getAllEntryByCollection(CollectionId collectionId);
   Future<Either<Failure, bool>> deleteToDoEntry(CollectionId collectionId,ToDoEntry toDoEntry);
   Future<Either<Failure, bool>> deleteToCollection(CollectionId collectionId);
+  Future<Either<Failure, bool>> loadFCMSetting(String userToken);
 }

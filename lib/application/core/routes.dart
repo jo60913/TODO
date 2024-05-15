@@ -73,7 +73,7 @@ final routes = GoRouter(
           name: SettingPage.pageConfig.name,
           path: '$_basePath/${SettingPage.pageConfig.name}',
           builder: (context, state) {
-            return const SettingPage();
+            return const SettingPageProvider();
           }),
       ShellRoute(
           navigatorKey: _shellNavigatorKey,

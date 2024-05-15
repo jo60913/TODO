@@ -1,5 +1,6 @@
 import 'package:either_dart/either.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:todo/data/data_source/interface/api_remote_data_source.dart';
 import 'package:todo/data/data_source/interface/todo_remote_data_source_interface.dart';
 import 'package:todo/data/data_source/mapper/todo_collection_mapper.dart';
 import 'package:todo/data/data_source/mapper/todo_entry_mapper.dart';
@@ -14,11 +15,12 @@ class ToDoRepositoryRemote
     with ToDoCollectionMapper, ToDoEntryMapper
     implements ToDoRepository {
   final ToDoRemoteDataSourceInterface remoteSource;
+  final ApiRemoteDataSourceInterface apiRemoteDataSource;
 
   String get userID =>
       FirebaseAuth.instance.currentUser?.uid ?? 'some-user-id123';
 
-  ToDoRepositoryRemote({required this.remoteSource});
+  ToDoRepositoryRemote({required this.remoteSource,required this.apiRemoteDataSource});
 
   @override
   Future<Either<Failure, bool>> createToDoCollection(
@@ -168,6 +170,16 @@ class ToDoRepositoryRemote
     } on ServerException catch (e) {
       return Future.value(Left(ServerFailure(stackTrace: e.toString())));
     } on Exception catch (e) {
+      return Future.value(Left(ServerFailure(stackTrace: e.toString())));
+    }
+  }
+
+  @override
+  Future<Either<Failure, bool>> loadFCMSetting(String userToken) async{
+    try{
+      final result = await apiRemoteDataSource.getFCMSetting(userID: userToken);
+      return Right(result);
+    }on Exception catch(e){
       return Future.value(Left(ServerFailure(stackTrace: e.toString())));
     }
   }

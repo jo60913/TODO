@@ -1,4 +1,5 @@
 import 'package:todo/application/core/firebase_api.dart';
+import 'package:todo/data/data_source/remote/api_remote_data_source.dart';
 import 'package:universal_html/html.dart' as html;
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -36,9 +37,9 @@ Future<void> main() async {
     options: DefaultFirebaseOptions.currentPlatform,
   );
 
-  if(Platform.isAndroid) {
+  // if(Platform.isAndroid) {
     await FirebaseApi().initNotifications();
-  }
+  // }
 
   ui_auth.FirebaseUIAuth.configureProviders([
     ui_auth.PhoneAuthProvider(),
@@ -48,6 +49,7 @@ Future<void> main() async {
   // dataSource.init();
 
   final remoteDataSource = FirestoreRemoteDataSource();
+  final apiRemoteDataSource = ApiRemoteDataSource();
 
   final authCubit = AuthCubit();
   FirebaseAuth.instance.authStateChanges().listen((event) { //一但使用者登入或登出時就會觸發
@@ -56,7 +58,9 @@ Future<void> main() async {
   });
 
   runApp(RepositoryProvider<ToDoRepository>(
-      create: (context) => ToDoRepositoryRemote(remoteSource: remoteDataSource),
+      create: (context) => ToDoRepositoryRemote(
+          remoteSource: remoteDataSource,
+          apiRemoteDataSource: apiRemoteDataSource),
       child: BlocProvider<AuthCubit>(
         create: (context) => authCubit,
         child: const BaseApp(),

@@ -116,4 +116,10 @@ class ToDoRepositoryMock implements ToDoRepository {
     // TODO: implement deleteToCollection
     throw UnimplementedError();
   }
+
+  @override
+  Future<Either<Failure, bool>> loadFCMSetting(String userToken) {
+    // TODO: implement loadFCMSetting
+    throw UnimplementedError();
+  }
 }
