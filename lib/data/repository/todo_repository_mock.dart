@@ -1,4 +1,5 @@
 import 'package:either_dart/either.dart';
+import 'package:todo/data/model/api/api_response.dart';
 import 'package:todo/domain/entity/todo_entry.dart';
 import '../../domain/entity/todo_collection.dart';
 import '../../domain/entity/todo_color.dart';
@@ -118,8 +119,14 @@ class ToDoRepositoryMock implements ToDoRepository {
   }
 
   @override
-  Future<Either<Failure, bool>> loadFCMSetting(String userToken) {
+  Future<Either<Failure, bool>> loadFCMSetting() {
     // TODO: implement loadFCMSetting
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<Either<Failure, ApiResponse>> uploadFCMValue(bool fcmValue) {
+    // TODO: implement uploadFCMValue
     throw UnimplementedError();
   }
 }

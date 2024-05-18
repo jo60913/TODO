@@ -5,6 +5,7 @@ import 'package:todo/data/data_source/interface/todo_remote_data_source_interfac
 import 'package:todo/data/data_source/mapper/todo_collection_mapper.dart';
 import 'package:todo/data/data_source/mapper/todo_entry_mapper.dart';
 import 'package:todo/data/exception/exception.dart';
+import 'package:todo/data/model/api/api_response.dart';
 import 'package:todo/domain/entity/todo_collection.dart';
 import 'package:todo/domain/entity/todo_entry.dart';
 import 'package:todo/domain/entity/unique_id.dart';
@@ -175,9 +176,19 @@ class ToDoRepositoryRemote
   }
 
   @override
-  Future<Either<Failure, bool>> loadFCMSetting(String userToken) async{
+  Future<Either<Failure, bool>> loadFCMSetting() async{
     try{
-      final result = await apiRemoteDataSource.getFCMSetting(userID: userToken);
+      final result = await apiRemoteDataSource.getFCMSetting(userID: userID);
+      return Right(result);
+    }on Exception catch(e){
+      return Future.value(Left(ServerFailure(stackTrace: e.toString())));
+    }
+  }
+
+  @override
+  Future<Either<Failure, ApiResponse>> uploadFCMValue(bool fcmValue) async {
+    try{
+      final result = await apiRemoteDataSource.uploadFCMValue(userID: userID,fcmValue: fcmValue);
       return Right(result);
     }on Exception catch(e){
       return Future.value(Left(ServerFailure(stackTrace: e.toString())));

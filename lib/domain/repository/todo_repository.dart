@@ -1,4 +1,5 @@
 import 'package:either_dart/either.dart';
+import 'package:todo/data/model/api/api_response.dart';
 import 'package:todo/domain/entity/todo_entry.dart';
 import 'package:todo/domain/entity/unique_id.dart';
 import '../entity/todo_collection.dart';
@@ -14,5 +15,6 @@ abstract class ToDoRepository {
   Future<Either<Failure, List<ToDoEntry>>> getAllEntryByCollection(CollectionId collectionId);
   Future<Either<Failure, bool>> deleteToDoEntry(CollectionId collectionId,ToDoEntry toDoEntry);
   Future<Either<Failure, bool>> deleteToCollection(CollectionId collectionId);
-  Future<Either<Failure, bool>> loadFCMSetting(String userToken);
+  Future<Either<Failure, bool>> loadFCMSetting();
+  Future<Either<Failure, ApiResponse>> uploadFCMValue(bool fcmValue);
 }

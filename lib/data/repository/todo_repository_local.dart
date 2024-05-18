@@ -3,6 +3,7 @@ import 'package:todo/data/data_source/interface/todo_local_data_source_interface
 import 'package:todo/data/data_source/mapper/todo_collection_mapper.dart';
 import 'package:todo/data/data_source/mapper/todo_entry_mapper.dart';
 import 'package:todo/data/exception/exception.dart';
+import 'package:todo/data/model/api/api_response.dart';
 import 'package:todo/domain/entity/todo_collection.dart';
 import 'package:todo/domain/entity/todo_entry.dart';
 import 'package:todo/domain/entity/unique_id.dart';
@@ -122,8 +123,14 @@ class ToDoRepositoryLocal with ToDoCollectionMapper,ToDoEntryMapper implements T
   }
 
   @override
-  Future<Either<Failure, bool>> loadFCMSetting(String userToken) {
+  Future<Either<Failure, bool>> loadFCMSetting() {
     // TODO: implement loadFCMSetting
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<Either<Failure, ApiResponse>> uploadFCMValue(bool fcmValue) {
+    // TODO: implement uploadFCMValue
     throw UnimplementedError();
   }
 }
