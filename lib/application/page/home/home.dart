@@ -138,7 +138,7 @@ class _HomePageState extends State<HomePage> {
                                             isSecondBodyDisplay);
 
                                 if (selectId == null) {
-                                  return const Placeholder();
+                                  return const Center(child: Text(AppString.homeAddNewMission),);
                                 } else {
                                   return ToDoDetailPageProvider(
                                       key: Key(selectId.value),
