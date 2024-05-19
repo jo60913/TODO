@@ -10,6 +10,7 @@ class BaseApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp.router(
       title: 'todo',
+      debugShowCheckedModeBanner: false,
       localizationsDelegates: const [
         ...GlobalMaterialLocalizations.delegates,
         GlobalWidgetsLocalizations.delegate
