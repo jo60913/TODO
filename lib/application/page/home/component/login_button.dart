@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../../../resource/app_string.dart';
 import '../../../app/cubit/auth_cubit.dart';
 
 class LoginButton extends StatelessWidget {
@@ -11,10 +12,10 @@ class LoginButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<AuthCubit, AuthCubitState>(
       builder: (context, state) {
-        String buttonTitle = '登入';
+        String buttonTitle = AppString.homeLogin;
         Function onPressed = () => context.pushNamed('login');
         if (state is AuthInitial && state.isLoggedIn) {
-          buttonTitle = "Profile";
+          buttonTitle = AppString.dashboardProfile;
           onPressed = () => context.pushNamed('profile');
         }
         return TextButton(

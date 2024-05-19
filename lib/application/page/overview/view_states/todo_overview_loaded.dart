@@ -12,6 +12,7 @@ import 'package:todo/domain/usecase/delete_todo_collection.dart';
 import 'package:todo/resource/app_color.dart';
 import '../../../../domain/entity/todo_collection.dart';
 import '../../../../domain/repository/todo_repository.dart';
+import '../../../../resource/app_string.dart';
 
 //代辦事項的集合
 class ToDoOverviewLoaded extends StatelessWidget {
@@ -55,13 +56,13 @@ class ToDoOverviewLoaded extends StatelessWidget {
                             return const [
                               PopupMenuItem(
                                 value: 'delete',
-                                child: Text('刪除'),
+                                child: Text(AppString.overviewDelete),
                               )
                             ];
                           },
                           onSelected: (String value){
                             if(value == 'delete'){
-                             debugPrint('按下刪除');
+                             debugPrint(AppString.overviewDelete);
                              deleteCollection(item.id.value,context);
                             }
                           },
@@ -70,7 +71,7 @@ class ToDoOverviewLoaded extends StatelessWidget {
                         title: Text(item.title),
                       ));
             }) : const Center(
-          child: Text("沒有資料 請點選右下角+新增"),
+          child: Text(AppString.overviewAddNewMissionCategory),
         ),
           Padding(
             padding: const EdgeInsets.all(8.0),

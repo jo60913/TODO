@@ -9,6 +9,8 @@ import 'package:todo/domain/entity/unique_id.dart';
 import 'package:todo/domain/repository/todo_repository.dart';
 import 'package:todo/domain/usecase/load_todo_entry_ids_for_collection.dart';
 
+import '../../../resource/app_string.dart';
+
 //代辦事項(TodoEntry)
 class ToDoDetailPageProvider extends StatelessWidget {
   final CollectionId collectionId;
@@ -33,7 +35,7 @@ class ToDoDetailPage extends StatelessWidget {
   const ToDoDetailPage({super.key, required this.collectionId});
 
   static const pageConfig = PageConfig(
-      icon: Icons.details_rounded, name: 'detail', child: Placeholder());
+      icon: Icons.details_rounded, name: AppString.detailTitle, child: Placeholder());
 
   @override
   Widget build(BuildContext context) {

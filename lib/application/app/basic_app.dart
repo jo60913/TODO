@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:todo/resource/app_string.dart';
 
 import '../core/routes.dart';
 
@@ -9,7 +10,7 @@ class BaseApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp.router(
-      title: 'todo',
+      title: AppString.appName,
       debugShowCheckedModeBanner: false,
       localizationsDelegates: const [
         ...GlobalMaterialLocalizations.delegates,

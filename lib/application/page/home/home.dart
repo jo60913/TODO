@@ -6,6 +6,7 @@ import 'package:todo/application/page/detail/todo_detail.dart';
 import 'package:todo/application/page/home/bloc/navigation_todo_cubit.dart';
 import 'package:todo/application/page/home/component/login_button.dart';
 import 'package:todo/application/page/setting/setting_page.dart';
+import '../../../resource/app_string.dart';
 import '../../core/constants.dart';
 import '../../core/page_config.dart';
 import '../dashboard/dashboard.dart';
@@ -33,7 +34,7 @@ class HomePage extends StatefulWidget {
 
   static const PageConfig pageConfig = PageConfig(
     icon: Icons.home_rounded,
-    name: 'home',
+    name: AppString.homeTitle,
   );
 
   static const tabs = [DashBoardPage.pageConfig, OverViewPage.pageConfig];

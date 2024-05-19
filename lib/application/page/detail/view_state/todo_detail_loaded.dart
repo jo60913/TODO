@@ -13,6 +13,7 @@ import 'package:todo/domain/entity/unique_id.dart';
 import '../../../../core/use_case.dart';
 import '../../../../domain/repository/todo_repository.dart';
 import '../../../../domain/usecase/delete_todo_entry.dart';
+import '../../../../resource/app_string.dart';
 import '../delete_todo_entry/bloc/todo_entry_delete_cubit.dart';
 
 
@@ -56,7 +57,7 @@ class _ToDoDetailLoadedState extends State<ToDoDetailLoaded> {
                         }
                       },
                     ),
-              ) : const Center(child: Text("沒有資料 請點選右下角+新增"),),
+              ) : const Center(child: Text(AppString.detailAddNewMission),),
               Align(
                 alignment: Alignment.bottomRight,
                 child: FloatingActionButton(
@@ -86,7 +87,7 @@ class _ToDoDetailLoadedState extends State<ToDoDetailLoaded> {
       context: context,
       position: RelativeRect.fromLTRB(position.dx, position.dy, 0, 0),
       items: const [
-        PopupMenuItem<String>(value: 'Done', child: Text('刪除')),
+        PopupMenuItem<String>(value: 'Done', child: Text(AppString.detailDelete)),
       ],
       elevation: 8.0,
     ).then((value) {

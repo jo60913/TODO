@@ -10,6 +10,7 @@ import 'package:todo/application/page/home/home.dart';
 import 'package:todo/application/page/overview/overview_page.dart';
 import 'package:todo/application/page/setting/setting_page.dart';
 import 'package:todo/domain/entity/unique_id.dart';
+import '../../resource/app_string.dart';
 import 'go_router_observer.dart';
 
 final GlobalKey<NavigatorState> _rootNavigatorKey =
@@ -98,7 +99,7 @@ final routes = GoRouter(
               "$_basePath/overview/${CreateToDoCollectionPage.pageConfig.name}",
           builder: (context, state) => Scaffold(
                 appBar: AppBar(
-                  title: const Text('新增'),
+                  title: const Text(AppString.overviewAdd),
                   leading: BackButton(
                     onPressed: () {
                       if (context.canPop()) {
@@ -121,7 +122,7 @@ final routes = GoRouter(
             final castedExtra = state.extra as CreateToDoEntryPageExtra;
             return Scaffold(
               appBar: AppBar(
-                title: const Text('新增'),
+                title: const Text(AppString.detailAdd),
                 leading: BackButton(
                   onPressed: () {
                     if (context.canPop()) {
@@ -148,7 +149,7 @@ final routes = GoRouter(
           builder: (context, state) {
             return Scaffold(
               appBar: AppBar(
-                title: const Text('details'),
+                title: const Text(AppString.detailTitle),
                 leading: BackButton(
                   onPressed: () {
                     if (context.canPop()) {

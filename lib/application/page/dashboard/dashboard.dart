@@ -5,13 +5,14 @@ import 'package:todo/application/page/dashboard/bloc/todo_dashboard_cubit.dart';
 import 'package:todo/application/page/dashboard/view_states/todo_dashboard_loaded.dart';
 import 'package:todo/application/page/dashboard/view_states/todo_dashboard_loading.dart';
 import '../../../domain/usecase/load_todo_collection_and_entry.dart';
+import '../../../resource/app_string.dart';
 import 'view_states/todo_dashboard_error.dart';
 
 class DashBoardPage extends StatelessWidget {
   const DashBoardPage({Key? key}) : super(key: key);
 
   static const pageConfig = PageConfig(
-      icon: Icons.dashboard_rounded, name: 'dashboard', child: DashBoardProvider());
+      icon: Icons.dashboard_rounded, name: AppString.dashboardTitle, child: DashBoardProvider());
 
   @override
   Widget build(BuildContext context) {

@@ -7,12 +7,14 @@ import 'package:todo/application/page/overview/view_states/todo_overview_loaded.
 import 'package:todo/application/page/overview/view_states/todo_overview_loading.dart';
 import 'package:todo/domain/usecase/load_todo_collections.dart';
 
+import '../../../resource/app_string.dart';
+
 class OverViewPage extends StatelessWidget {
   const OverViewPage({super.key});
 
   static const pageConfig = PageConfig(
       icon: Icons.work_history_rounded,
-      name: 'overview',
+      name: AppString.overviewTitle,
       child: OverviewPageProvider());
 
   @override

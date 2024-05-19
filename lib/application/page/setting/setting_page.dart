@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:todo/domain/usecase/load_fcm_setting.dart';
 import '../../../domain/repository/todo_repository.dart';
 import '../../../domain/usecase/update_fcm_value.dart';
+import '../../../resource/app_string.dart';
 import '../../core/page_config.dart';
 
 class SettingPage extends StatefulWidget {
@@ -33,11 +34,11 @@ class _SettingPageState extends State<SettingPage> {
             builder: (BuildContext context, AsyncSnapshot snapshot) {
               if (snapshot.connectionState == ConnectionState.done) {
                 if (snapshot.hasError) {
-                  return Text("Error: ${snapshot.error}");
+                  return Text("${AppString.settingError}: ${snapshot.error}");
                 } else {
                   // 请求成功，显示数据
                   return CheckboxListTile(
-                    title: const Text("推播設定"),
+                    title: const Text(AppString.settingFCMTitle),
                     value: initFcmValue,
                     onChanged: (value) {
                       setState(() {

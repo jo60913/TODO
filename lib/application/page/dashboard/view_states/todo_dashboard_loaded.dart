@@ -1,6 +1,7 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:todo/domain/entity/todo_collection_and_entry.dart';
+import 'package:todo/resource/app_string.dart';
 
 import '../../../../resource/app_color.dart';
 
@@ -14,7 +15,7 @@ class ToDoDashBoardLoadedPage extends StatelessWidget {
     final list = collections.expand((e) => e.entryList).toList();
     if(list.isEmpty){
       return const Center(
-        child: Text("請至DashBoard頁面中新增待辦事項"),
+        child: Text(AppString.dashboardAddNewMissionHint),
       );
     }
     int successCount = list.where((element) => (element.isDone == true)).length;
@@ -28,7 +29,7 @@ class ToDoDashBoardLoadedPage extends StatelessWidget {
     const Duration animDuration = Duration(milliseconds: 250);
     double successRate = itemCount == 0 ? 0 : successCount / itemCount;
     return Column(mainAxisAlignment: MainAxisAlignment.center, children: [
-      Text('完成率 ${(successRate*100).round()} %'),
+      Text('${AppString.homeSuccessOfRate} ${(successRate*100).round()} %'),
       const SizedBox(height: 50,),
       Expanded(
           child: Padding(
