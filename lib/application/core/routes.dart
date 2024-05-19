@@ -1,4 +1,4 @@
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_auth/firebase_auth.dart' as fba;
 import 'package:firebase_ui_auth/firebase_ui_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
@@ -17,17 +17,20 @@ final GlobalKey<NavigatorState> _rootNavigatorKey =
 final GlobalKey<NavigatorState> _shellNavigatorKey =
     GlobalKey<NavigatorState>(debugLabel: 'shell');
 const String _basePath = "/home";
+final authProvider = [
+  EmailAuthProvider()
+];
 
 final routes = GoRouter(
     initialLocation: '$_basePath/${DashBoardPage.pageConfig.name}',
     observers: [GoRouterObserver()],
     navigatorKey: _rootNavigatorKey,
-    redirect: (context,state) async {
-      final result = await FirebaseAuth.instance.authStateChanges().first;
+    redirect: (context, state) async {
+      final result = await fba.FirebaseAuth.instance.authStateChanges().first;
 
-      if(result == null) {
+      if (result == null) {
         return '/login';
-      }else{
+      } else {
         return null;
       }
     },
@@ -36,6 +39,7 @@ final routes = GoRouter(
           name: 'login',
           path: '/login',
           builder: (context, state) => SignInScreen(
+                providers: authProvider,
                 actions: [
                   AuthStateChangeAction<SignedIn>((context, signedIn) {
                     //使用者登入
@@ -59,6 +63,7 @@ final routes = GoRouter(
         name: 'profile',
         path: '/profile',
         builder: (context, state) => ProfileScreen(
+          providers: authProvider,
           actions: [
             SignedOutAction((context) {
               context.goNamed(
