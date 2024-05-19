@@ -68,7 +68,6 @@ class _SettingPageState extends State<SettingPage> {
 
   Future<void> _getFirstFCMValue() async {
     initFcmValue = await LoadFCMSetting(toDoRepository: RepositoryProvider.of<ToDoRepository>(context)).call();
-    // return LoadFCMSetting(toDoRepository: RepositoryProvider.of<ToDoRepository>(context)).call(userID);
   }
 }
 
