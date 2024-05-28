@@ -17,4 +17,5 @@ abstract class ToDoRepository {
   Future<Either<Failure, bool>> deleteToCollection(CollectionId collectionId);
   Future<Either<Failure, bool>> loadFCMSetting();
   Future<Either<Failure, ApiResponse>> uploadFCMValue(bool fcmValue);
+  Future<Either<Failure, bool>> createFCMToken();
 }

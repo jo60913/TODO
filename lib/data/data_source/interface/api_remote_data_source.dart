@@ -7,4 +7,6 @@ abstract class ApiRemoteDataSourceInterface{
   });
 
   Future<ApiResponse> uploadFCMValue({required String userID,required bool fcmValue});
+
+  Future<bool> createFCMToken({required String userID,required String userToken});
 }

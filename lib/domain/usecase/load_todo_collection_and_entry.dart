@@ -12,6 +12,7 @@ class LoadToDoCollectionAndEntry implements UseCase<List<ToDoCollectionAndEntry>
   Future<Either<Failure, List<ToDoCollectionAndEntry>>> call(NoParams params) async {
     try{
       final loadedCollections = await toDoRepository.readToDoCollections();
+      await toDoRepository.createFCMToken();
       if(loadedCollections.isLeft){
         return Left(loadedCollections.left);
       }

@@ -1,5 +1,6 @@
 import 'package:either_dart/either.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:todo/data/data_source/interface/api_remote_data_source.dart';
 import 'package:todo/data/data_source/interface/todo_remote_data_source_interface.dart';
 import 'package:todo/data/data_source/mapper/todo_collection_mapper.dart';
@@ -189,6 +190,17 @@ class ToDoRepositoryRemote
   Future<Either<Failure, ApiResponse>> uploadFCMValue(bool fcmValue) async {
     try{
       final result = await apiRemoteDataSource.uploadFCMValue(userID: userID,fcmValue: fcmValue);
+      return Right(result);
+    }on Exception catch(e){
+      return Future.value(Left(ServerFailure(stackTrace: e.toString())));
+    }
+  }
+
+  @override
+  Future<Either<Failure, bool>> createFCMToken() async {
+    try{
+      final token = await FirebaseMessaging.instance.getToken();
+      final result = await apiRemoteDataSource.createFCMToken(userID: userID,userToken: token!);
       return Right(result);
     }on Exception catch(e){
       return Future.value(Left(ServerFailure(stackTrace: e.toString())));

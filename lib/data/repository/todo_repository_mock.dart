@@ -129,4 +129,10 @@ class ToDoRepositoryMock implements ToDoRepository {
     // TODO: implement uploadFCMValue
     throw UnimplementedError();
   }
+
+  @override
+  Future<Either<Failure, bool>> createFCMToken() {
+    // TODO: implement createFCMToken
+    throw UnimplementedError();
+  }
 }

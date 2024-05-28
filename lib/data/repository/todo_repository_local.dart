@@ -133,6 +133,12 @@ class ToDoRepositoryLocal with ToDoCollectionMapper,ToDoEntryMapper implements T
     // TODO: implement uploadFCMValue
     throw UnimplementedError();
   }
+
+  @override
+  Future<Either<Failure, bool>> createFCMToken() {
+    // TODO: implement createFCMToken
+    throw UnimplementedError();
+  }
 }
 
 
