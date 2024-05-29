@@ -1,9 +1,24 @@
-import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 
 class FirebaseApi {
-  final _firebaseMessaging = FirebaseMessaging.instance;
 
   Future<void> initNotifications() async {
-    await _firebaseMessaging.requestPermission();
+    FlutterLocalNotificationsPlugin localNotificationsPlugin =
+        FlutterLocalNotificationsPlugin();
+    var android = const AndroidInitializationSettings('images/launch_icon.png');
+    var initializationSettings = InitializationSettings(android: android);
+    localNotificationsPlugin.initialize(initializationSettings);
+
+    var androidDetails = const AndroidNotificationDetails(
+        'channel id', 'channel name',
+        importance: Importance.max, priority: Priority.high);
+
+    var details = NotificationDetails(android: androidDetails);
+    localNotificationsPlugin.show(
+        DateTime.now().millisecondsSinceEpoch >> 10,
+        '訊息標題',
+        '訊息內容',
+        details  //剛才的訊息通知規格變數
+    );
   }
 }
