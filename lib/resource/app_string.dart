@@ -5,10 +5,10 @@ class AppString{
   static const String homeLogin = "登入";
   static const String homeAddNewMission = "沒有資料 請點選右下角+新增";
   static const String homeTitle = "主畫面";
-//  新增任務
+//  任務預覽
   static const String dashboardAddNewMissionHint = "請至新增任務頁面中新增待辦事項";
   static const String dashboardProfile = "個人資料";
-  static const String dashboardTitle = "新增任務";
+  static const String dashboardTitle = "任務總覽";
 //  任務分類
   static const String overviewTitle = "任務分類";
   static const String overviewAddNewMissionCategory = "沒有資料 請點選右下角+新增";
