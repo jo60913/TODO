@@ -1,4 +1,5 @@
 import 'package:either_dart/either.dart';
+import 'package:flutter/foundation.dart';
 import 'package:todo/core/use_case.dart';
 import 'package:todo/domain/entity/todo_collection_and_entry.dart';
 import 'package:todo/domain/failure/failures.dart';
@@ -12,7 +13,9 @@ class LoadToDoCollectionAndEntry implements UseCase<List<ToDoCollectionAndEntry>
   Future<Either<Failure, List<ToDoCollectionAndEntry>>> call(NoParams params) async {
     try{
       final loadedCollections = await toDoRepository.readToDoCollections();
-      await toDoRepository.createFCMToken();
+      if (!kIsWeb) {
+        await toDoRepository.createFCMToken();
+      }
       if(loadedCollections.isLeft){
         return Left(loadedCollections.left);
       }
