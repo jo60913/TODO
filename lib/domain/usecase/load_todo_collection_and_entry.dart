@@ -24,7 +24,7 @@ class LoadToDoCollectionAndEntry implements UseCase<List<ToDoCollectionAndEntry>
         if(loadedEntries.isLeft){
           continue;
         }
-        final todoCollectionAndEntry = ToDoCollectionAndEntry(id: item.id, title: item.title, color: item.color, entryList:loadedEntries.right);
+        final todoCollectionAndEntry = ToDoCollectionAndEntry(id: item.id, title: item.title, colorIndex: item.itemIndex, entryList:loadedEntries.right);
         collectionList.add(todoCollectionAndEntry);
       }
 

@@ -10,6 +10,7 @@ import 'package:todo/core/use_case.dart';
 import 'package:todo/domain/entity/unique_id.dart';
 import 'package:todo/domain/usecase/delete_todo_collection.dart';
 import 'package:todo/resource/app_color.dart';
+import 'package:todo/resource/app_color_array.dart';
 import '../../../../domain/entity/todo_collection.dart';
 import '../../../../domain/repository/todo_repository.dart';
 import '../../../../resource/app_string.dart';
@@ -37,8 +38,8 @@ class ToDoOverviewLoaded extends StatelessWidget {
                   builder: (context, state) => ListTile(
                         tileColor: colorScheme.surface,
                         selectedTileColor: colorScheme.surfaceVariant,
-                        iconColor: item.color.color,
-                        selectedColor: item.color.color,
+                        iconColor: AppColorArray.collectionEntryPriority[item.itemIndex],
+                        selectedColor:AppColorArray.collectionEntryPriority[item.itemIndex],
                         selected: item.id == state.selectedCollectionId,
                         onTap: () {
                           //小螢幕延展的時候也會用到，所以寫到最前面

@@ -2,7 +2,6 @@ import 'package:either_dart/either.dart';
 import 'package:todo/data/model/api/api_response.dart';
 import 'package:todo/domain/entity/todo_entry.dart';
 import '../../domain/entity/todo_collection.dart';
-import '../../domain/entity/todo_color.dart';
 import '../../domain/entity/unique_id.dart';
 import '../../domain/failure/failures.dart';
 import '../../domain/repository/todo_repository.dart';
@@ -20,9 +19,7 @@ class ToDoRepositoryMock implements ToDoRepository {
     (index) => ToDoCollection(
       id: CollectionId.fromUniqueString(index.toString()),
       title: 'title $index',
-      color: ToDoColor(
-        colorIndex: index % ToDoColor.predefinedColors.length,
-      ),
+      itemIndex: index,
     ),
   );
 
@@ -89,7 +86,7 @@ class ToDoRepositoryMock implements ToDoRepository {
 
   @override
   Future<Either<Failure, bool>> createToDoCollection(ToDoCollection collection) {
-    final collectionToAdd = ToDoCollection(id: CollectionId.fromUniqueString(toDoCollection.length.toString()), title: collection.title, color: collection.color);
+    final collectionToAdd = ToDoCollection(id: CollectionId.fromUniqueString(toDoCollection.length.toString()), title: collection.title, itemIndex: collection.itemIndex);
     toDoCollection.add(collectionToAdd);
     return Future.delayed(const Duration(milliseconds: 100), () => const Right(true));
   }

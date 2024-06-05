@@ -3,11 +3,11 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:todo/application/core/page_config.dart';
 import 'package:todo/application/page/create_todo_collection_page/bloc/create_todo_collection_page_cubit.dart';
-import 'package:todo/domain/entity/todo_color.dart';
+import 'package:todo/resource/app_color_array.dart';
 import '../../../domain/repository/todo_repository.dart';
 import '../../../domain/usecase/create_todo_collection.dart';
 
-
+List<String> _dropDownItem = ["重要/緊急","重要/不緊急","不重要/緊急","不重要/不緊急"];
 class CreateToDoCollectionPageProvider extends StatelessWidget {
   const CreateToDoCollectionPageProvider({Key? key}) : super(key: key);
 
@@ -40,7 +40,7 @@ class CreateToDoCollectionPage extends StatefulWidget {
 
 class _CreateToDoCollectionPageState extends State<CreateToDoCollectionPage> {
   final _formKey = GlobalKey<FormState>();
-
+  String _dropdownValue = _dropDownItem.first;
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -49,8 +49,36 @@ class _CreateToDoCollectionPageState extends State<CreateToDoCollectionPage> {
         key : _formKey,
         child: Column(
           children: [
+            Row(
+              children: [
+                const Text("重要程度",style: TextStyle(fontSize: 15),),
+                const SizedBox(width: 10,),
+                DropdownButton<String>(
+                    value: _dropdownValue,
+                    items: _dropDownItem
+                        .map<DropdownMenuItem<String>>((String value) {
+                      int index = _dropDownItem.indexOf(value);
+                      return DropdownMenuItem<String>(
+                        value: value,
+                        child: Row(
+                          children: [
+                            CircleAvatar(radius:10,backgroundColor: AppColorArray.collectionEntryPriority[index],),
+                            const SizedBox(height: 20),
+                            Text(value)
+                          ],
+                        ),
+                      );
+                    }).toList(),
+                    onChanged: (value){
+                      context.read<CreateTodoCollectionPageCubit>().itemChange(_dropDownItem.indexOf(value!));
+                      setState(() {
+                        _dropdownValue = value;
+                      });
+                    }),
+              ],
+            ),
             TextFormField(
-              decoration: const InputDecoration(labelText: "標題"),
+              decoration: const InputDecoration(labelText: "標題",labelStyle: TextStyle(fontSize: 15)),
               onChanged: (value)=>context.read<CreateTodoCollectionPageCubit>().titleChange(value),
               validator: (value) {
                 if (value == null || value.isEmpty) {
@@ -59,28 +87,14 @@ class _CreateToDoCollectionPageState extends State<CreateToDoCollectionPage> {
                 return null;
               },
             ),
-            TextFormField(
-              decoration: const InputDecoration(labelText: "顏色"),
-              onChanged: (value)=>context.read<CreateTodoCollectionPageCubit>().colorChange(value),
-              validator: (value) {
-                if(value == null || value.isEmpty) {
-                  return "請輸入數字";
-                }
-                final parseColorIndex = int.parse(value);
-                if (parseColorIndex < 0 ||
-                    parseColorIndex > ToDoColor.predefinedColors.length) {
-                  return '請輸入0到${ToDoColor.predefinedColors.length - 1}之間的數';
-                }
-                return null;
-              },
-            ),
+
             const SizedBox(
               height: 16,
             ),
             ElevatedButton(onPressed: (){
               final isValide = _formKey.currentState?.validate();   //用來辨識所有當中所有欄位的validator是否正確為null代表為true
               if(isValide == true) {
-                context.read<CreateTodoCollectionPageCubit>().submit().then((value) => context.pop(true)).then((value) => context.pop(true),);
+                context.read<CreateTodoCollectionPageCubit>().submit().then((value) => context.pop(true));
               }
             }, child: const Text('儲存'))
           ],

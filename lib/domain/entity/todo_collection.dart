@@ -1,32 +1,29 @@
-import 'todo_color.dart';
 import 'unique_id.dart';
 
 class ToDoCollection {
   final CollectionId id;
   final String title;
-  final ToDoColor color;
+  final int itemIndex;
 
   ToDoCollection({
     required this.id,
     required this.title,
-    required this.color,
+    required this.itemIndex,
   });
 
   ToDoCollection copyWith({
     String? title,
-    ToDoColor? color,
+    int itemIndex = 0,
   }) {
     return ToDoCollection(
-        id: id, title: title ?? this.title, color: color ?? this.color);
+        id: id, title: title ?? this.title, itemIndex: itemIndex);
   }
 
   factory ToDoCollection.empty() {
     return ToDoCollection(
       id: CollectionId(),
       title: '',
-      color: ToDoColor(
-        colorIndex: 0,
-      ),
+      itemIndex: 0,
     );
   }
 }

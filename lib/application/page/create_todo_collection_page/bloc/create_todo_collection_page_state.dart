@@ -2,15 +2,15 @@ part of 'create_todo_collection_page_cubit.dart';
 
 class CreateTodoCollectionPageState extends Equatable {
   final String? title;
-  final String? color;
+  final int itemIndex;
 
-  const CreateTodoCollectionPageState({this.title, this.color});
+  const CreateTodoCollectionPageState({this.title, this.itemIndex = 0});
 
-  CreateTodoCollectionPageState copyWith({String? title, String? color}) {
+  CreateTodoCollectionPageState copyWith({String? title, int? index}) {
     return CreateTodoCollectionPageState(
-        color: color ?? this.color, title: title ?? this.title);
+        itemIndex: index?? itemIndex, title: title ?? this.title);
   }
 
   @override
-  List<Object?> get props => [title, color];
+  List<Object?> get props => [title, itemIndex];
 }
