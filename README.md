@@ -31,7 +31,7 @@ Dart 版本為3.2.5
 
 ## 操作
 * Udemy完課後的app狀況
-
+  ![image](https://github.com/jo60913/TODO/blob/main/az_recorder_20240616_114225.gif?raw=true)
 * 自己延伸Udemy後的app
 
 ## 打包
