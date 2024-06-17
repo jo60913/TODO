@@ -3,6 +3,9 @@ TODO app 使用史蒂芬‧柯維（Stephen Covey）提出的「時間管理矩�
 在Udemy中完成課程。並在課後自己延伸出任務導覽頁面、設定畫面與自動推播功能
 https://www.udemy.com/course/flutter-made-easy-zero-to-mastery/
 
+## 成品
+* 網站版：https://todo-app-251e7.web.app/
+
 ## 功能
 * 任務導覽：顯示使用者當前任務完成度，與各分類的完成度
 * 任務分類：顯示我有任務分類，點擊任務分類可以查看該分類內有完成與未完成的待辦事項。任務分類主要以「時間管理矩陣」做為基礎。
@@ -31,8 +34,9 @@ Dart 版本為3.2.5
 
 ## 操作
 * Udemy完課後的app狀況
-  ![image](https://github.com/jo60913/TODO/blob/main/az_recorder_20240616_114225.gif?raw=true){:height="50%" width="50%"}
+  ![image](https://github.com/jo60913/TODO/blob/main/az_recorder_20240616_114225.gif?raw=true)
 * 自己延伸Udemy後的app
+* ![image](https://github.com/jo60913/TODO/blob/main/az_recorder_20240616_090920.gif?raw=true)
 
 ## 打包
 更改versionCode 在pubspec.yaml 當中version1.0.0+n 修改N的內容即可
