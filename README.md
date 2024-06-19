@@ -18,11 +18,14 @@ git clone https://github.com/jo60913/TODO
 ```
 
 ## 設置
-Flutter 版本為3.16.8
+Flutter 版本為3.16.8  
 Dart 版本為3.2.5
 
 ## Build and Run
 在Android studio IDE下 直接點擊Run
+
+## Api專案的Github
+https://github.com/jo60913/Todo-api
 
 ## 用法
 使用BLoC模式+clean architecture架構開發，flutter_adaptive_scaffold套件做適配。目前成功運行在在Android、網頁上。
@@ -37,6 +40,151 @@ Dart 版本為3.2.5
 ![image](https://github.com/jo60913/TODO/blob/main/readmeimage/az_recorder_20240616_114225.gif?raw=true)
 * 自己延伸Udemy後的app  
 ![image](https://github.com/jo60913/TODO/blob/main/readmeimage/az_recorder_20240616_090920.gif?raw=true)
+
+## 結構
+專案結構
+```
+.
+├── application
+│   ├── app
+│   │   ├── basic_app.dart
+│   │   └── cubit
+│   │       ├── auth_cubit.dart
+│   │       └── auth_state.dart
+│   ├── component
+│   │   └── todo_entry_item
+│   │       ├── bloc
+│   │       │   ├── todo_entry_item_cubit.dart
+│   │       │   └── todo_entry_item_state.dart
+│   │       ├── todo_entry_item.dart
+│   │       └── view_state
+│   │           ├── todo_entry_item_error.dart
+│   │           ├── todo_entry_item_loaded.dart
+│   │           └── todo_entry_item_loading.dart
+│   ├── core
+│   │   ├── constants.dart
+│   │   ├── firebase_api.dart
+│   │   ├── form_value.dart
+│   │   ├── go_router_observer.dart
+│   │   ├── page_config.dart
+│   │   └── routes.dart
+│   └── page
+│       ├── create_todo_collection_page
+│       │   ├── bloc
+│       │   │   ├── create_todo_collection_page_cubit.dart
+│       │   │   └── create_todo_collection_page_state.dart
+│       │   └── create_todo_collection_page.dart
+│       ├── create_todo_entry
+│       │   ├── bloc
+│       │   │   ├── create_to_do_entry_page_cubit.dart
+│       │   │   └── create_to_do_entry_page_state.dart
+│       │   └── create_todo_entry_page.dart
+│       ├── dashboard
+│       │   ├── bloc
+│       │   │   ├── todo_dashboard_cubit.dart
+│       │   │   └── todo_dashboard_state.dart
+│       │   ├── dashboard.dart
+│       │   └── view_states
+│       │       ├── todo_dashboard_error.dart
+│       │       ├── todo_dashboard_loaded.dart
+│       │       └── todo_dashboard_loading.dart
+│       ├── detail
+│       │   ├── bloc
+│       │   │   ├── to_do_detail_cubit.dart
+│       │   │   └── to_do_detail_state.dart
+│       │   ├── delete_todo_entry
+│       │   │   ├── bloc
+│       │   │   │   ├── todo_entry_delete_cubit.dart
+│       │   │   │   └── todo_entry_delete_state.dart
+│       │   │   └── view_states
+│       │   │       └── todo_entry_delete_error.dart
+│       │   ├── todo_detail.dart
+│       │   └── view_state
+│       │       ├── todo_detail_error.dart
+│       │       ├── todo_detail_loaded.dart
+│       │       └── todo_detail_loading.dart
+│       ├── home
+│       │   ├── bloc
+│       │   │   ├── navigation_todo_cubit.dart
+│       │   │   └── navigation_todo_state.dart
+│       │   ├── component
+│       │   │   └── login_button.dart
+│       │   └── home.dart
+│       ├── overview
+│       │   ├── bloc
+│       │   │   ├── todo_overview_cubit.dart
+│       │   │   └── todo_overview_cubit_state.dart
+│       │   ├── overview_page.dart
+│       │   └── view_states
+│       │       ├── todo_overview_error.dart
+│       │       ├── todo_overview_loaded.dart
+│       │       └── todo_overview_loading.dart
+│       └── setting
+│           └── setting_page.dart
+├── core
+│   └── use_case.dart
+├── data
+│   ├── data_source
+│   │   ├── interface
+│   │   │   ├── api_remote_data_source.dart
+│   │   │   ├── todo_local_data_source_interface.dart
+│   │   │   └── todo_remote_data_source_interface.dart
+│   │   ├── local
+│   │   │   ├── hive_local_data_source.dart
+│   │   │   └── memory_local_data_source.dart
+│   │   ├── mapper
+│   │   │   ├── todo_collection_mapper.dart
+│   │   │   └── todo_entry_mapper.dart
+│   │   └── remote
+│   │       ├── api_remote_data_source.dart
+│   │       └── firestore_remote_data_source.dart
+│   ├── exception
+│   │   └── exception.dart
+│   ├── model
+│   │   ├── api
+│   │   │   ├── api_response.dart
+│   │   │   ├── api_response.g.dart
+│   │   │   ├── get_token_response.dart
+│   │   │   └── get_token_response.g.dart
+│   │   ├── todo_collection_model.dart
+│   │   ├── todo_collection_model.g.dart
+│   │   ├── todo_entry_model.dart
+│   │   └── todo_entry_model.g.dart
+│   └── repository
+│       ├── todo_repository_local.dart
+│       ├── todo_repository_mock.dart
+│       └── todo_repository_remote.dart
+├── domain
+│   ├── entity
+│   │   ├── todo_collection.dart
+│   │   ├── todo_collection_and_entry.dart
+│   │   ├── todo_entry.dart
+│   │   └── unique_id.dart
+│   ├── failure
+│   │   └── failures.dart
+│   ├── repository
+│   │   └── todo_repository.dart
+│   └── usecase
+│       ├── create_fcm_token.dart
+│       ├── create_todo_collection.dart
+│       ├── create_todo_entry.dart
+│       ├── delete_todo_collection.dart
+│       ├── delete_todo_entry.dart
+│       ├── load_fcm_setting.dart
+│       ├── load_todo_collection_and_entry.dart
+│       ├── load_todo_collections.dart
+│       ├── load_todo_entry.dart
+│       ├── load_todo_entry_ids_for_collection.dart
+│       ├── update_fcm_value.dart
+│       └── update_todo_entry.dart
+├── firebase_options.dart
+├── main.dart
+└── resource
+    ├── app_color.dart
+    ├── app_color_array.dart
+    └── app_string.dart
+
+```
 
 ## 打包
 更改versionCode 在pubspec.yaml 當中version1.0.0+n 修改N的內容即可    
@@ -57,3 +205,4 @@ flutter build appbundle
 * fl_chart  用來顯示任務總覽頁面的比例圖
 * firebase_messaging 推播使用套件
 * flutter_launcher_icons 切割app icon使用套件
+* dio 連接api使用的網路套件
