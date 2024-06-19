@@ -39,6 +39,21 @@ Dart 版本為3.2.5
 ![image](https://github.com/jo60913/TODO/blob/main/readmeimage/az_recorder_20240616_090920.gif?raw=true)
 
 ## 打包
-更改versionCode 在pubspec.yaml 當中version1.0.0+n 修改N的內容即可
-打包aab 在build.gradle中設定好key.properties所以只要打flutter build appbundle指令。aab檔就會出現在
-{專案路徑}/Todo/build/app/outputs/bundle/release/app-release.aab
+更改versionCode 在pubspec.yaml 當中version1.0.0+n 修改N的內容即可    
+打包aab 在build.gradle中設定好key.properties所以只要打
+```
+flutter build appbundle
+```
+指令。aab檔就會出現在 {專案路徑}/Todo/build/app/outputs/bundle/release/app-release.aab
+
+## 使用套件
+* go_router 路由
+* flutter_adaptive_scaffold 畫面的適配
+* flutter_bloc bloc模式使用套件
+* json_annotation json與對象轉換
+* firebase_ui_auth 登入畫面
+* cloud_firestore 連接Firebase Firestore
+* firebase_crashlytics Firebase崩潰紀錄
+* fl_chart  用來顯示任務總覽頁面的比例圖
+* firebase_messaging 推播使用套件
+* flutter_launcher_icons 切割app icon使用套件
