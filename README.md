@@ -5,6 +5,7 @@ https://www.udemy.com/course/flutter-made-easy-zero-to-mastery/
 
 ## 成品
 * 網站版：https://todo-app-251e7.web.app/
+* Android版 Google Play：https://play.google.com/store/apps/details?id=com.huangliner.todo
 
 ## 功能
 * 任務導覽：顯示使用者當前任務完成度，與各分類的完成度
@@ -47,60 +48,60 @@ https://github.com/jo60913/Todo-api
 .
 ├── application
 │   ├── app
-│   │   ├── basic_app.dart
-│   │   └── cubit
+│   │   ├── basic_app.dart      //app主題設定
+│   │   └── cubit       //登入頁面 檢查是否有登入過
 │   │       ├── auth_cubit.dart
 │   │       └── auth_state.dart
 │   ├── component
-│   │   └── todo_entry_item
-│   │       ├── bloc
-│   │       │   ├── todo_entry_item_cubit.dart
+│   │   └── todo_entry_item     //任務頁面中的每個任務item的view
+│   │       ├── bloc            //載入每個任務的
+│   │       │   ├── todo_entry_item_cubit.dart  
 │   │       │   └── todo_entry_item_state.dart
 │   │       ├── todo_entry_item.dart
-│   │       └── view_state
+│   │       └── view_state      //載入任務時的Bloc 狀態
 │   │           ├── todo_entry_item_error.dart
 │   │           ├── todo_entry_item_loaded.dart
 │   │           └── todo_entry_item_loading.dart
 │   ├── core
-│   │   ├── constants.dart
-│   │   ├── firebase_api.dart
-│   │   ├── form_value.dart
-│   │   ├── go_router_observer.dart
-│   │   ├── page_config.dart
-│   │   └── routes.dart
+│   │   ├── constants.dart         //常數
+│   │   ├── firebase_api.dart      //android使用FCM設置
+│   │   ├── form_value.dart         //監聽新增任務時的狀態
+│   │   ├── go_router_observer.dart     //路由轉換監聽
+│   │   ├── page_config.dart    //頁面設置 每個page都會有一個這個來統一紀錄每個頁面跳轉狀態
+│   │   └── routes.dart     //路由畫面
 │   └── page
-│       ├── create_todo_collection_page
-│       │   ├── bloc
+│       ├── create_todo_collection_page     //新增任務分類
+│       │   ├── bloc       //新增任務分類的Bloc
 │       │   │   ├── create_todo_collection_page_cubit.dart
 │       │   │   └── create_todo_collection_page_state.dart
-│       │   └── create_todo_collection_page.dart
-│       ├── create_todo_entry
-│       │   ├── bloc
+│       │   └── create_todo_collection_page.dart    //新增任務分類的頁面
+│       ├── create_todo_entry   //任務頁面新增
+│       │   ├── bloc        //新增任務時Bloc
 │       │   │   ├── create_to_do_entry_page_cubit.dart
 │       │   │   └── create_to_do_entry_page_state.dart
-│       │   └── create_todo_entry_page.dart
-│       ├── dashboard
-│       │   ├── bloc
+│       │   └── create_todo_entry_page.dart //任務頁面新增時的畫面
+│       ├── dashboard       //任務導覽頁面
+│       │   ├── bloc    //下載任務分類圖表的Bloc
 │       │   │   ├── todo_dashboard_cubit.dart
 │       │   │   └── todo_dashboard_state.dart
 │       │   ├── dashboard.dart
-│       │   └── view_states
+│       │   └── view_states     //下載任務分類圖表的Bloc ＵＩ
 │       │       ├── todo_dashboard_error.dart
 │       │       ├── todo_dashboard_loaded.dart
 │       │       └── todo_dashboard_loading.dart
-│       ├── detail
-│       │   ├── bloc
-│       │   │   ├── to_do_detail_cubit.dart
-│       │   │   └── to_do_detail_state.dart
+│       ├── detail      //任務頁面
+│       │   ├── bloc        //下載任務時的Bloc
+│       │   │   ├── to_do_detail_cubit.dart     
+│       │   │   └── to_do_detail_state.dart     
 │       │   ├── delete_todo_entry
-│       │   │   ├── bloc
+│       │   │   ├── bloc        //刪除任務用bloc
 │       │   │   │   ├── todo_entry_delete_cubit.dart
-│       │   │   │   └── todo_entry_delete_state.dart
+│       │   │   │   └── todo_entry_delete_state.dart    
 │       │   │   └── view_states
 │       │   │       └── todo_entry_delete_error.dart
 │       │   ├── todo_detail.dart
-│       │   └── view_state
-│       │       ├── todo_detail_error.dart
+│       │   └── view_state          //下載任務時Bloc的UI
+│       │       ├── todo_detail_error.dart          
 │       │       ├── todo_detail_loaded.dart
 │       │       └── todo_detail_loading.dart
 │       ├── home
@@ -110,50 +111,50 @@ https://github.com/jo60913/Todo-api
 │       │   ├── component
 │       │   │   └── login_button.dart
 │       │   └── home.dart
-│       ├── overview
+│       ├── overview    //任務導覽頁面
 │       │   ├── bloc
-│       │   │   ├── todo_overview_cubit.dart
-│       │   │   └── todo_overview_cubit_state.dart
-│       │   ├── overview_page.dart
-│       │   └── view_states
+│       │   │   ├── todo_overview_cubit.dart    //任務導覽用Bloc的Cubit
+│       │   │   └── todo_overview_cubit_state.dart //任務導覽用Bloc的state
+│       │   ├── overview_page.dart  
+│       │   └── view_states     //任務導覽在Bloc不同狀態時的UI
 │       │       ├── todo_overview_error.dart
 │       │       ├── todo_overview_loaded.dart
 │       │       └── todo_overview_loading.dart
-│       └── setting
+│       └── setting     //  設定頁面
 │           └── setting_page.dart
 ├── core
-│   └── use_case.dart
+│   └── use_case.dart     usercase的父類
 ├── data
 │   ├── data_source
 │   │   ├── interface
-│   │   │   ├── api_remote_data_source.dart
-│   │   │   ├── todo_local_data_source_interface.dart
-│   │   │   └── todo_remote_data_source_interface.dart
+│   │   │   ├── api_remote_data_source.dart                 api 使用data source 的interface
+│   │   │   ├── todo_local_data_source_interface.dart       本地資料庫使用data source interface (已停用)
+│   │   │   └── todo_remote_data_source_interface.dart      firestore所使用data source
 │   │   ├── local
-│   │   │   ├── hive_local_data_source.dart
-│   │   │   └── memory_local_data_source.dart
+│   │   │   ├── hive_local_data_source.dart     本地資料庫實現類 todo_local_data_source_interface實現類 (已停用)
+│   │   │   └── memory_local_data_source.dart   將資料暫存對象 
 │   │   ├── mapper
 │   │   │   ├── todo_collection_mapper.dart
 │   │   │   └── todo_entry_mapper.dart
 │   │   └── remote
-│   │       ├── api_remote_data_source.dart
-│   │       └── firestore_remote_data_source.dart
+│   │       ├── api_remote_data_source.dart     api實際呼叫的地方
+│   │       └── firestore_remote_data_source.dart     firestore實際呼叫的地方
 │   ├── exception
 │   │   └── exception.dart
 │   ├── model
 │   │   ├── api
-│   │   │   ├── api_response.dart
+│   │   │   ├── api_response.dart   api回傳轉成對象
 │   │   │   ├── api_response.g.dart
-│   │   │   ├── get_token_response.dart
+│   │   │   ├── get_token_response.dart /notification/fcm api 回傳對象
 │   │   │   └── get_token_response.g.dart
 │   │   ├── todo_collection_model.dart
 │   │   ├── todo_collection_model.g.dart
 │   │   ├── todo_entry_model.dart
 │   │   └── todo_entry_model.g.dart
 │   └── repository
-│       ├── todo_repository_local.dart
-│       ├── todo_repository_mock.dart
-│       └── todo_repository_remote.dart
+│       ├── todo_repository_local.dart      本地資料庫用repository
+│       ├── todo_repository_mock.dart       測試用repository  
+│       └── todo_repository_remote.dart     使用Firbase Firstore用repository
 ├── domain
 │   ├── entity
 │   │   ├── todo_collection.dart
@@ -161,28 +162,28 @@ https://github.com/jo60913/Todo-api
 │   │   ├── todo_entry.dart
 │   │   └── unique_id.dart
 │   ├── failure
-│   │   └── failures.dart
+│   │   └── failures.dart   //當FireStore 回傳錯誤時使用
 │   ├── repository
-│   │   └── todo_repository.dart
+│   │   └── todo_repository.dart    //Repository interface
 │   └── usecase
-│       ├── create_fcm_token.dart
-│       ├── create_todo_collection.dart
-│       ├── create_todo_entry.dart
-│       ├── delete_todo_collection.dart
-│       ├── delete_todo_entry.dart
-│       ├── load_fcm_setting.dart
-│       ├── load_todo_collection_and_entry.dart
-│       ├── load_todo_collections.dart
-│       ├── load_todo_entry.dart
-│       ├── load_todo_entry_ids_for_collection.dart
-│       ├── update_fcm_value.dart
-│       └── update_todo_entry.dart
+│       ├── create_fcm_token.dart       //每次登入時更新一次使用者fcm token
+│       ├── create_todo_collection.dart //新增任務分類至firestore
+│       ├── create_todo_entry.dart      //新增任務至firestore
+│       ├── delete_todo_collection.dart //刪除任務分類 會先刪除當中的任務後再刪除分類本身
+│       ├── delete_todo_entry.dart      //刪除任務
+│       ├── load_fcm_setting.dart       //從api中取得使用者推播設定
+│       ├── load_todo_collection_and_entry.dart     //任務導覽用來統計完成率
+│       ├── load_todo_collections.dart  //顯示待辦事項的分類
+│       ├── load_todo_entry.dart        //顯示分類下的任務
+│       ├── load_todo_entry_ids_for_collection.dart     //取得當前任務分類的id，新增任務時使用
+│       ├── update_fcm_value.dart       //使用api更新FCM推播設定
+│       └── update_todo_entry.dart      //更新任務狀態
 ├── firebase_options.dart
-├── main.dart
+├── main.dart   程式入口
 └── resource
-    ├── app_color.dart
-    ├── app_color_array.dart
-    └── app_string.dart
+    ├── app_color.dart  存放顏色
+    ├── app_color_array.dart     任務分類時新增分類用顏色
+    └── app_string.dart 中文字資源
 
 ```
 
