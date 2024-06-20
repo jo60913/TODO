@@ -1,4 +1,4 @@
-# todo
+# ToDo待辦事項
 TODO app 使用史蒂芬‧柯維（Stephen Covey）提出的「時間管理矩陣」來為待辦事項做分類。並於每日UTC 00:00 (GMT+8 8:00)通知使用者完成任務度
 在Udemy中完成課程。並在課後自己延伸出任務導覽頁面、設定畫面與自動推播功能
 https://www.udemy.com/course/flutter-made-easy-zero-to-mastery/
