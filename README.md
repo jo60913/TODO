@@ -38,11 +38,11 @@ https://github.com/jo60913/Todo-api
 
 ## 操作
 * Udemy完課後的app狀況
-1.登入畫面使用Firebase Auth UI並設定電話驗證登入 
+1. 登入畫面使用Firebase Auth UI並設定電話驗證登入 
 2. 完成任務分類頁面與新增
 3. 完成任務頁面與新增
 4. 其他頁面用來練習路由切換用
-5. 設定頁面用來測試Firebase Crashlytics 接收到的狀況
+5. 設定頁面用來測試Firebase Crashlytics 接收到的狀況  
 ![image](https://github.com/jo60913/TODO/blob/main/readmeimage/az_recorder_20240616_114225.gif?raw=true)
 * 自己延伸Udemy後的app
 1. 登入頁面修改為email登入
@@ -51,7 +51,7 @@ https://github.com/jo60913/Todo-api
 4. 任務分類頁面新增刪除並修改為時間管理矩陣 
 5. 任務分類按最右邊可以刪除 
 6. 任務頁面長按顯示刪除 
-7. 新增Fcm推播
+7. 新增Fcm推播  
 ![image](https://github.com/jo60913/TODO/blob/main/readmeimage/az_recorder_20240616_090920.gif?raw=true)
 
 ## 結構
