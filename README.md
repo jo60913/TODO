@@ -36,6 +36,9 @@ https://github.com/jo60913/Todo-api
 * 登入與個人資料頁面使用firebase_ui_auth套件的SignInScreen、ProfileScreen產生。所以目前還只有英文內容
 * BLoC使用flutter_bloc套件
 
+## 專案架構
+![image](https://github.com/jo60913/TODO/blob/main/readmeimage/Todo%E5%BE%85%E8%BE%A6%E4%BA%8B%E9%A0%85%E6%9E%B6%E6%A7%8B.png?raw=true)
+
 ## 操作
 * Udemy完課後的app狀況
 1. 登入畫面使用Firebase Auth UI並設定電話驗證登入 
